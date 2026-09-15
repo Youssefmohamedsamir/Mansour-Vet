@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Mansour - منصور للأدوية البيطرية</title>
+
+  <!-- Native Mobile App & PWA Settings (No Browser Feel) -->
+  <meta name="theme-color" content="#070c14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mansour">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Icons & Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icons/icon-512.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <!-- Stylesheet (Native Mobile Look, Zero Animations) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body oncontextmenu="return false;">
+
+  <!-- 1. شاشة القفل وتسجيل الدخول (Zero Browser Feel - Pure Mobile App Security) -->
+  <div class="login-screen-overlay" id="loginScreen" style="display: none;">
+    <div class="login-card">
+      <div class="login-brand-header">
+        <img src="icons/icon-512.png" alt="شعار Mansour" class="login-logo">
+        <h2 class="login-title">Mansour</h2>
+        <div class="login-subtitle">منصور للأدوية البيطرية</div>
+      </div>
+
+      <div class="alert-box error" id="loginErrorMsg"></div>
+
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label class="form-label" for="loginUsername">اسم المستخدم</label>
+          <input type="text" id="loginUsername" class="form-input" placeholder="اسم المستخدم (الافتراضي: admin)" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">كلمة المرور</label>
+          <div class="input-password-wrapper">
+            <input type="password" id="loginPassword" class="form-input" placeholder="كلمة المرور (الافتراضية: mansour123)" required autocomplete="current-password">
+            <button type="button" class="toggle-pass-btn" id="togglePassBtn" title="إظهار / إخفاء">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <label class="remember-row">
+          <input type="checkbox" id="rememberMeCheck" checked>
+          <span>تذكر تسجيل دخولي على هذا الجهاز</span>
+        </label>
+
+        <button type="submit" class="btn-login">
+          <span>دخول إلى الصيدلية</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+
+        <div class="login-hint">
+          البيانات الافتراضية: المستخدم <strong>admin</strong> | كلمة المرور <strong>mansour123</strong>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. واجهة التطبيق الرئيسية (Main Mobile App Container) -->
+  <div class="app-container" id="mainAppContainer" style="display: none;">
+
+    <!-- شريط الرأس الطبي الفاخر المتناسق -->
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <img src="icons/icon-512.png" alt="شعار Mansour" class="app-logo">
+        <div class="brand-text-col">
+          <h1 class="brand-title">Mansour</h1>
+          <span class="brand-subtitle">منصور للأدوية البيطرية</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <!-- زر فحص وتجربة الإشعارات على الهاتف -->
+        <button class="header-btn notif-btn" title="فحص وتجربة الإشعارات" onclick="triggerDeviceAlerts()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+        </button>
+        <!-- زر تغيير كلمة المرور والأمان -->
+        <button class="header-btn lock-btn" title="تغيير كلمة المرور والأمان" onclick="openSecurityModal()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </button>
+        <!-- زر النسخ الاحتياطي ونقل البيانات -->
+        <button class="header-btn backup-btn" title="النسخ الاحتياطي ونقل البيانات" onclick="openBackupModal(event)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+        </button>
+        <!-- زر تسجيل الخروج والقفل -->
+        <button class="header-btn logout-btn" title="تسجيل الخروج والقفل" onclick="handleLogout()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- شريط التنبيه الحرج قبل أسبوع (الأولوية القصوى) -->
+    <div class="urgent-alert-banner" id="urgentBanner" style="display: none;">
+      <div class="urgent-alert-content">
+        <span class="alert-badge-count" id="urgentCountBadge">0</span>
+        <div class="alert-text-bold" id="urgentBannerText">تنبيه: توجد أدوية تنتهي صلاحيتها خلال أسبوع!</div>
+      </div>
+      <button class="alert-action-btn" onclick="setFilter('urgent')">عرض الأصناف</button>
+    </div>
+
+    <!-- لوحة المؤشرات السريعة -->
+    <div class="stats-grid">
+      <div class="stat-card" data-filter="all" onclick="setFilter('all')">
+        <div class="stat-title">إجمالي الأصناف</div>
+        <div class="stat-value" id="statTotal">0</div>
+      </div>
+      <div class="stat-card urgent" data-filter="urgent" onclick="setFilter('urgent')">
+        <div class="stat-title">ينتهي خلال أسبوع</div>
+        <div class="stat-value" id="statUrgent">0</div>
+      </div>
+      <div class="stat-card critical" data-filter="critical" onclick="setFilter('critical')">
+        <div class="stat-title">منتهي الصلاحية</div>
+        <div class="stat-value" id="statCritical">0</div>
+      </div>
+      <div class="stat-card" data-filter="lowStock" onclick="setFilter('lowStock')">
+        <div class="stat-title">مخزون منخفض</div>
+        <div class="stat-value" id="statLowStock">0</div>
+      </div>
+    </div>
+
+    <!-- شريط البحث الفوري وزر الإضافة -->
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="بحث سريع عن دواء أو مادة فعالة...">
+      </div>
+      <button class="btn-add-primary" onclick="openAddModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>إضافة دواء</span>
+      </button>
+    </div>
+
+    <!-- فلاتر سريعة -->
+    <div class="filter-bar">
+      <button class="filter-chip active" data-filter="all" onclick="setFilter('all')">كل الأدوية</button>
+      <button class="filter-chip" data-filter="urgent" onclick="setFilter('urgent')">ينتهي خلال أسبوع</button>
+      <button class="filter-chip" data-filter="critical" onclick="setFilter('critical')">منتهي الصلاحية</button>
+      <button class="filter-chip" data-filter="warning" onclick="setFilter('warning')">ينتهي خلال شهر</button>
+      <button class="filter-chip" data-filter="lowStock" onclick="setFilter('lowStock')">نقص مخزون</button>
+    </div>
+
+    <!-- قائمة بطاقات الأدوية المسجلة -->
+    <main class="medicines-list" id="medicinesList">
+      <!-- يتم ملؤها ديناميكياً برمجياً -->
+    </main>
+
+  </div>
+
+  <!-- شريط التنقل السفلي للهواتف الذكية -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="setFilter('all')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      </svg>
+      <span>الرئيسية</span>
+    </button>
+    <button class="nav-item" onclick="setFilter('urgent')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <span>تنبيهات الأسبوع</span>
+    </button>
+    <button class="nav-item" onclick="openAddModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="16"></line>
+        <line x1="8" y1="12" x2="16" y2="12"></line>
+      </svg>
+      <span>إضافة دواء</span>
+    </button>
+    <button class="nav-item" onclick="openSecurityModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+      <span>الحساب والأمان</span>
+    </button>
+  </nav>
+
+  <!-- نافذة تفاصيل الدواء + تقرير الذكاء الاصطناعي البيطري المدمج (بدون صور وبدون ملاحظات) -->
+  <div class="modal-overlay" id="modalDetails">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title" id="modalDetailsTitle">تفاصيل الصنف</div>
+        <button class="modal-close-btn" onclick="closeModal('modalDetails')" aria-label="إغلاق">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalDetailsBody">
+        <!-- يتم ملء التفاصيل برمجياً -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn-danger-action" onclick="handleDeleteCurrent()">حذف الصنف</button>
+        <button class="btn-secondary" onclick="handleEditCurrent()">تعديل البيانات</button>
+        <button class="btn-primary-action" onclick="closeModal('modalDetails')">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة إضافة / تعديل صنف دوائي (مبسّطة: بدون صورة وبدون ملاحظات تماماً كما طُلب) -->
+  <div class="modal-overlay" id="modalForm">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title" id="modalFormTitle">إضافة صنف علاجي جديد</div>
+        <button class="modal-close-btn" onclick="closeModal('modalForm')" aria-label="إغلاق">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="medForm">
+        <div class="modal-body">
+          <input type="hidden" id="medId">
+
+          <div class="form-group">
+            <label class="form-label" for="medName">اسم الصنف التجاري <span class="req">*</span></label>
+            <input type="text" id="medName" class="form-input" placeholder="مثال: تايلوزين 20% أو أوكسي تتراسيكلين" required>
+            <div id="aiLiveFeedback" style="display: none; padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; margin-top: 6px; border: 1px solid transparent;"></div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="medGeneric">المادة الفعالة / الاسم العلمي</label>
+              <input type="text" id="medGeneric" class="form-input" placeholder="مثال: Tylosin Tartrate">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="medCategory">الفئة البيطرية</label>
+              <select id="medCategory" class="form-select">
+                <option value="مضادات حيوية">مضادات حيوية</option>
+                <option value="مضادات طفيليات وديدان">مضادات طفيليات وديدان</option>
+                <option value="مضادات التهاب ومسكنات">مضادات التهاب ومسكنات</option>
+                <option value="فيتامينات ومقويات">فيتامينات ومقويات</option>
+                <option value="أدوية دواجن وكوكسيديا">أدوية دواجن وكوكسيديا</option>
+                <option value="هرمونات وتناسل">هرمونات وتناسل</option>
+                <option value="أمراض هضمية وكرش">أمراض هضمية وكرش</option>
+                <option value="مطهرات ومبيدات">مطهرات ومبيدات</option>
+                <option value="أدوية حيوانات أليفة">أدوية حيوانات أليفة</option>
+                <option value="أخرى">أخرى</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- تواريخ الإنتاج والانتهاء -->
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="medProdDate">تاريخ الإنتاج</label>
+              <input type="date" id="medProdDate" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="medExpDate">تاريخ الانتهاء <span class="req">*</span></label>
+              <input type="date" id="medExpDate" class="form-input" required>
+            </div>
+          </div>
+
+          <!-- المخزون والكميات -->
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="medQuantity">الكمية المتوفرة بالمخزن <span class="req">*</span></label>
+              <input type="number" id="medQuantity" class="form-input" min="0" value="1" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="medMinQuantity">حد التنبيه بنقص المخزون</label>
+              <input type="number" id="medMinQuantity" class="form-input" min="0" value="5">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="medPurchasePrice">سعر الشراء / التكلفة</label>
+              <input type="number" step="0.5" id="medPurchasePrice" class="form-input" placeholder="سعر الشراء">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="medWholesalePrice">سعر الجملة / المزارع</label>
+              <input type="number" step="0.5" id="medWholesalePrice" class="form-input" placeholder="سعر الجملة">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="medPrice">سعر البيع / القطاعي</label>
+              <input type="number" step="0.5" id="medPrice" class="form-input" placeholder="سعر القطاعي">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="medBatch">رقم التشغيلة / الدفعة</label>
+              <input type="text" id="medBatch" class="form-input" placeholder="رقم الدفعة (اختياري)">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('modalForm')">إلغاء</button>
+          <button type="submit" class="btn-primary-action">حفظ الصنف</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة إدارة الأمان وتغيير اسم المستخدم وكلمة المرور (واجهة محترمة) -->
+  <div class="modal-overlay" id="modalSecurity">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">إدارة الأمان وتغيير كلمة المرور</div>
+        <button class="modal-close-btn" onclick="closeModal('modalSecurity')" aria-label="إغلاق">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="securityForm">
+        <div class="modal-body">
+          <div class="alert-box" id="securityAlertBox"></div>
+
+          <div style="background: #070c14; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.82rem; color: var(--text-secondary);">المستخدم الحالي:</span>
+            <strong style="color: var(--brand-primary); font-size: 0.95rem;" id="currentUsernameDisplay">admin</strong>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="newUsernameInput">اسم المستخدم الجديد <span class="req">*</span></label>
+            <input type="text" id="newUsernameInput" class="form-input" required autocomplete="username">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="currentPasswordInput">كلمة المرور الحالية <span class="req">*</span></label>
+            <input type="password" id="currentPasswordInput" class="form-input" placeholder="أدخل كلمة المرور الحالية للتأكيد" required autocomplete="current-password">
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="newPasswordInput">كلمة المرور الجديدة <span class="req">*</span></label>
+              <input type="password" id="newPasswordInput" class="form-input" placeholder="كلمة مرور جديدة" required autocomplete="new-password">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="confirmPasswordInput">تأكيد كلمة المرور <span class="req">*</span></label>
+              <input type="password" id="confirmPasswordInput" class="form-input" placeholder="أعد كتابتها للتأكيد" required autocomplete="new-password">
+            </div>
+          </div>
+
+          <div style="background: #060e18; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: 14px; width: 100%; box-sizing: border-box; gap: 12px;">
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 0.88rem; font-weight: 700; color: #f8fafc;">فحص إشعارات الهاتف</div>
+              <div style="font-size: 0.76rem; color: var(--text-secondary); margin-top: 2px; line-height: 1.4;">تجربة وصول تنبيه عند اقتراب انتهاء الصلاحية</div>
+            </div>
+            <button type="button" class="btn-secondary" onclick="triggerDeviceAlerts()" style="padding: 8px 16px; font-size: 0.82rem; color: #f59e0b; border-color: rgba(245, 158, 11, 0.35); flex-shrink: 0; white-space: nowrap;">
+              تجربة إشعار
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('modalSecurity')">إلغاء</button>
+          <button type="submit" class="btn-primary-action">حفظ التغييرات</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة النسخ الاحتياطي -->
+  <!-- نافذة النسخ الاحتياطي ونقل البيانات لكافة الهواتف -->
+  <div class="modal-overlay" id="modalBackup">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">النسخ الاحتياطي ونقل البيانات</div>
+        <button class="modal-close-btn" onclick="closeModal('modalBackup')" aria-label="إغلاق">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 14px;">
+        
+        <!-- القسم 1: النسخ والمشاركة السريعة -->
+        <div class="backup-section-card">
+          <div class="backup-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            1. النسخ والمشاركة السريعة (بدون ملفات)
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+            انسخ كود النسخة بضغطة زر واحدة لتلصقه في الواتساب أو الملاحظات وترسله لنفسك أو لأي هاتف آخر:
+          </p>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-primary-action" onclick="handleCopyBackup()" style="flex: 1; padding: 10px; font-size: 0.86rem; text-align: center;">
+              نسخ كود النسخة بالكامل
+            </button>
+            <button class="btn-secondary" onclick="handleShareBackup()" style="padding: 10px 14px; font-size: 0.86rem; text-align: center;">
+              مشاركة
+            </button>
+          </div>
+        </div>
+
+        <!-- القسم 2: الاستعادة السريعة (لصق الكود) -->
+        <div class="backup-section-card">
+          <div class="backup-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+            2. استعادة البيانات من الكود الملصوق
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+            إذا كان لديك كود نسخة احتياطية منسوخ من هاتف آخر، الصقه هنا ثم اضغط استعادة:
+          </p>
+          <textarea id="backupTextarea" class="backup-textarea" placeholder="الصق كود النسخة الاحتياطية هنا..."></textarea>
+          <button class="btn-primary-action" onclick="handleTextImport()" style="width: 100%; padding: 10px; font-size: 0.86rem; text-align: center; background: #0284c7;">
+            استعادة البيانات من الكود الآن
+          </button>
+        </div>
+
+        <!-- القسم 3: ملفات JSON المباشرة -->
+        <div class="backup-section-card">
+          <div class="backup-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            3. حفظ أو استيراد ملف JSON
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-secondary" onclick="handleExport()" style="flex: 1; padding: 10px; font-size: 0.84rem; text-align: center;">
+              تحميل ملف JSON
+            </button>
+            <label class="btn-secondary" style="flex: 1; padding: 10px; font-size: 0.84rem; cursor: pointer; display: block; text-align: center;">
+              اختيار ملف واستعادته
+              <input type="file" id="importFileInput" accept=".json,application/json,text/plain" style="display: none;" onchange="handleImport(event)">
+            </label>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary-action" onclick="closeModal('modalBackup')">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ملفات الجافاسكريبت (Clean Code Architecture) -->
+  <script src="js/auth.js"></script>
+  <script src="js/vet-knowledge.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/cloud-sync.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
+
+

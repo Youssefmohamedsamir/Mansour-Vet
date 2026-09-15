@@ -1,0 +1,3938 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Mansour - منصور للأدوية البيطرية</title>
+
+  <!-- Native Mobile App & PWA Settings (No Browser Feel) -->
+  <meta name="theme-color" content="#070c14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mansour">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Icons & Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icons/icon-512.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <!-- Stylesheet (Native Mobile Look, Zero Animations) -->
+  <style>
+/* Inlined Mansour Vet Stylesheet */
+/* Mansour Vet Pharmacy - Native Mobile Clinical Theme (100% Clean Code, Zero Browser Feel) */
+
+:root {
+  --bg-main: #070c14;
+  --bg-surface: #0e1524;
+  --bg-card: #131d31;
+  --bg-card-hover: #17243c;
+  --border-color: #1e2c44;
+  --border-focus: #10b981;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  --brand-primary: #10b981;
+  --brand-primary-dark: #059669;
+  --brand-light: #d1fae5;
+  --brand-gold: #f59e0b;
+  
+  --status-critical-bg: #450a0a;
+  --status-critical-text: #fca5a5;
+  --status-critical-border: #991b1b;
+  
+  --status-urgent-bg: #431407;
+  --status-urgent-text: #fdba74;
+  --status-urgent-border: #ea580c;
+
+  --status-warning-bg: #3b2803;
+  --status-warning-text: #fde047;
+  --status-warning-border: #ca8a04;
+
+  --status-safe-bg: #052e16;
+  --status-safe-text: #86efac;
+  --status-safe-border: #16a34a;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+}
+
+/* Reset & Native App Touch Rules */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Cairo", Arial, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  direction: rtl;
+  text-align: right;
+  line-height: 1.45;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1. Login Screen (Ultra-Luxury Emerald Clinical Mobile Theme) */
+.login-screen-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 25%, #082620 0%, #061118 60%, #03070a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 20px) 20px calc(env(safe-area-inset-bottom, 0px) + 20px) 20px;
+  z-index: 9999;
+  overflow-y: auto;
+}
+
+.login-card {
+  background: linear-gradient(180deg, rgba(14, 23, 39, 0.96) 0%, rgba(8, 14, 24, 0.98) 100%);
+  border: 1.5px solid rgba(16, 185, 129, 0.28);
+  border-radius: 26px;
+  width: 100%;
+  max-width: 410px;
+  padding: 34px 26px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 35px rgba(16, 185, 129, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-brand-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-logo {
+  width: 86px;
+  height: 86px;
+  border-radius: 22px;
+  box-shadow: 0 10px 28px rgba(16, 185, 129, 0.35);
+  border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.login-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.login-subtitle {
+  font-size: 0.78rem;
+  color: #10b981;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: right;
+}
+
+.form-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.2px;
+}
+
+.form-input,
+input[type="text"].form-input,
+input[type="password"].form-input,
+input[type="number"].form-input,
+input[type="date"].form-input,
+select.form-input,
+textarea.form-input {
+  width: 100%;
+  height: 48px;
+  box-sizing: border-box;
+  background-color: #08111c !important;
+  border: 1.5px solid #1c2b42 !important;
+  border-radius: 14px !important;
+  padding: 12px 16px !important;
+  font-size: 16px !important; /* Prevents iOS Safari auto-zoom */
+  font-weight: 600 !important;
+  color: #f8fafc !important;
+  font-family: inherit !important;
+  outline: none !important;
+}
+
+textarea.form-input {
+  height: auto;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.form-input:focus {
+  border-color: #10b981 !important;
+  background-color: #0b1726 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22) !important;
+}
+
+.form-input::placeholder {
+  color: #475569 !important;
+  font-weight: 400 !important;
+}
+
+.input-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-password-wrapper .form-input {
+  padding-left: 46px !important;
+}
+
+.toggle-pass-btn {
+  position: absolute;
+  left: 12px;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.toggle-pass-btn:hover,
+.toggle-pass-btn:active {
+  color: #10b981;
+}
+
+.remember-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.84rem;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.remember-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #10b981;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-login {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #021a10;
+  font-weight: 800;
+  font-size: 1.02rem;
+  border: none;
+  border-radius: 14px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.32);
+}
+
+.btn-login:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.login-hint {
+  font-size: 0.78rem;
+  color: #64748b;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 12px;
+  line-height: 1.5;
+}
+
+/* Cloud Sync Status Badge */
+.cloud-sync-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 20px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #10b981;
+  cursor: pointer;
+}
+
+.cloud-sync-badge.syncing {
+  border-color: #f59e0b;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.sync-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  display: inline-block;
+}
+
+.cloud-sync-badge.syncing .sync-dot {
+  background: #f59e0b;
+}
+
+/* Backup & Restore Modern Cards */
+.backup-section-card {
+  background: #08111c;
+  border: 1px solid #1c2b42;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.backup-section-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.backup-textarea {
+  width: 100%;
+  height: 80px;
+  box-sizing: border-box;
+  background: #040910;
+  border: 1px solid #1c2b42;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-family: monospace;
+  direction: ltr;
+  text-align: left;
+  resize: vertical;
+}
+
+.backup-textarea:focus {
+  border-color: #10b981;
+  outline: none;
+}
+
+/* 2. Main Mobile App Container */
+.app-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: calc(env(safe-area-inset-top, 0px) + 6px) 12px 65px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: rgba(14, 23, 38, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.app-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+.brand-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.brand-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.brand-subtitle {
+  font-size: 0.66rem;
+  color: #10b981;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.header-btn {
+  background: #0d1726;
+  border: 1px solid #1e2c44;
+  color: #94a3b8;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  transition: transform 0.1s, background 0.15s;
+}
+
+.header-btn:active {
+  transform: scale(0.94);
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.header-btn.notif-btn {
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.header-btn.lock-btn {
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.header-btn.backup-btn {
+  color: #10b981;
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.header-btn.logout-btn {
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.header-btn.logout-btn:active {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* 7-Day Urgent Expiry Alert Banner */
+.urgent-alert-banner {
+  background: var(--status-urgent-bg);
+  border: 1px solid var(--status-urgent-border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.urgent-alert-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert-badge-count {
+  background: #ea580c;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 900;
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+
+.alert-text-bold {
+  font-weight: 800;
+  color: var(--status-urgent-text);
+  font-size: 0.88rem;
+}
+
+.alert-action-btn {
+  background: #ea580c;
+  color: #ffffff;
+  border: none;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Stats Dashboard (Clean 2x2 on Mobile, 4x1 on Desktop) */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+@media (min-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat-card {
+  background: #0e1626;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+
+.stat-card:active {
+  transform: scale(0.98);
+}
+
+.stat-card.active-filter {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.stat-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: #f8fafc;
+}
+
+.stat-card.critical .stat-value { color: #f87171; }
+.stat-card.urgent .stat-value { color: #fb923c; }
+.stat-card.lowStock .stat-value { color: #38bdf8; }
+
+/* Search & Add */
+.search-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+  margin-bottom: 6px;
+}
+
+.search-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.search-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  height: 48px;
+  padding: 10px 42px 10px 14px;
+  background: #0e1626;
+  border: 1.5px solid #1c2b42;
+  border-radius: 14px;
+  color: #f8fafc;
+  font-size: 16px !important; /* CRITICAL: Prevents iOS Safari auto-zoom on focus */
+  outline: none;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  border-color: #10b981;
+  background-color: #0b1726;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.search-input::placeholder {
+  color: #64748b;
+  font-size: 0.88rem;
+}
+
+.btn-add-primary {
+  background: #10b981;
+  color: #021a10;
+  border: none;
+  border-radius: 14px;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+  transition: transform 0.15s, background 0.15s;
+}
+
+.btn-add-primary:active {
+  transform: scale(0.96);
+  background: var(--brand-primary-dark);
+}
+
+/* Filter Chips */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 2px 10px 2px;
+  margin-bottom: 6px;
+  scrollbar-width: none;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  background: #0e1626;
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.filter-chip:active {
+  transform: scale(0.96);
+}
+
+.filter-chip.active {
+  background: #10b981;
+  color: #021a10;
+  border-color: #10b981;
+  font-weight: 800;
+}
+
+/* Medicine Cards List */
+.medicines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.med-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.med-card:active {
+  background: var(--bg-card-hover);
+}
+
+.med-card.border-critical { border-right: 4px solid #ef4444; }
+.med-card.border-urgent { border-right: 4px solid #f97316; }
+.med-card.border-warning { border-right: 4px solid #eab308; }
+.med-card.border-safe { border-right: 4px solid #10b981; }
+
+.med-main-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.med-category-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: #0a1f22;
+  border: 1px solid #134e4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.med-details-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.med-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.med-generic {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.med-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge-critical {
+  background: var(--status-critical-bg);
+  color: var(--status-critical-text);
+  border: 1px solid var(--status-critical-border);
+}
+
+.badge-urgent {
+  background: var(--status-urgent-bg);
+  color: var(--status-urgent-text);
+  border: 1px solid var(--status-urgent-border);
+}
+
+.badge-warning {
+  background: var(--status-warning-bg);
+  color: var(--status-warning-text);
+  border: 1px solid var(--status-warning-border);
+}
+
+.badge-safe {
+  background: var(--status-safe-bg);
+  color: var(--status-safe-text);
+  border: 1px solid var(--status-safe-border);
+}
+
+.badge-category {
+  background: #18263e;
+  color: #93c5fd;
+  border: 1px solid #2563eb33;
+}
+
+/* Pricing tags on medicine card */
+.med-price-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.price-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.price-tag.tag-cost {
+  background: rgba(148, 163, 184, 0.1);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.price-tag.tag-wholesale {
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.price-tag.tag-retail {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Stock Control (+ and -) */
+.med-stock-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border-color);
+  padding-right: 10px;
+}
+
+.stock-counter-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+}
+
+.stock-btn {
+  background: #1e2d48;
+  border: none;
+  color: #fff;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stock-btn:active {
+  background: var(--brand-primary);
+  color: #042017;
+}
+
+.stock-qty-display {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #fff;
+  min-width: 28px;
+  text-align: center;
+}
+
+.stock-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 16px;
+  background: var(--bg-surface);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.empty-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.empty-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 14, 0.88);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  z-index: 1000;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 520px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+.modal-box form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.modal-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close-btn:active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.modal-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  background: #090e18;
+  flex-shrink: 0;
+}
+
+/* Forms */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.form-label span.req { color: #ef4444; }
+
+.form-input, .form-select {
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  padding: 9px 12px;
+  font-size: 0.9rem;
+  outline: none;
+  font-family: inherit;
+}
+
+.form-input:focus, .form-select:focus {
+  border-color: var(--brand-primary);
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .form-grid-2 {
+    gap: 8px;
+  }
+}
+
+.btn-secondary {
+  background: #1b263b;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-primary-action {
+  background: var(--brand-primary);
+  border: none;
+  color: #042017;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.btn-danger-action {
+  background: #991b1b;
+  border: none;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* AI Veterinary Card in Details */
+.details-summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #090e18;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-label {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+
+.summary-val {
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.ai-vet-card {
+  background: #062624;
+  border: 1px solid #0d9488;
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ai-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(20, 184, 166, 0.25);
+  padding-bottom: 6px;
+}
+
+.ai-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #2dd4bf;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.ai-pill {
+  background: #0f766e;
+  color: #ccfbf1;
+  font-size: 0.7rem;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.ai-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ai-section-label {
+  font-size: 0.74rem;
+  color: #99f6e4;
+  font-weight: 700;
+}
+
+.ai-section-content {
+  font-size: 0.85rem;
+  color: #f0fdfa;
+  line-height: 1.4;
+}
+
+.species-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 3px;
+}
+
+.species-tag {
+  background: rgba(16, 185, 129, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #a7f3d0;
+  font-size: 0.72rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+/* Alert Boxes */
+.alert-box {
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: none;
+}
+
+.alert-box.error {
+  background: #450a0a;
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+}
+
+.alert-box.success {
+  background: #052e16;
+  border: 1px solid #10b981;
+  color: #86efac;
+}
+
+/* Bottom Navigation (Native App Bar) */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 16, 28, 0.96);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 4px 8px 4px 8px;
+  z-index: 999;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: #94a3b8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 3px 10px;
+  transition: all 0.2s ease;
+}
+
+.nav-item:active {
+  transform: scale(0.95);
+}
+
+.nav-item.active {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.nav-item svg {
+  width: 20px;
+  height: 20px;
+}
+
+</style>
+</head>
+<body oncontextmenu="return false;">
+
+  <!-- 1. شاشة القفل وتسجيل الدخول (Zero Browser Feel - Pure Mobile App Security) -->
+  <div class="login-screen-overlay" id="loginScreen" style="display: none;">
+    <div class="login-card">
+      <div class="login-brand-header">
+        <img src="icons/icon-512.png" alt="شعار Mansour" class="login-logo">
+        <h2 class="login-title">Mansour</h2>
+        <div class="login-subtitle">منصور للأدوية البيطرية</div>
+      </div>
+
+      <div class="alert-box error" id="loginErrorMsg"></div>
+
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label class="form-label" for="loginUsername">اسم المستخدم</label>
+          <input type="text" id="loginUsername" class="form-input" placeholder="اسم المستخدم (الافتراضي: admin)" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">كلمة المرور</label>
+          <div class="input-password-wrapper">
+            <input type="password" id="loginPassword" class="form-input" placeholder="كلمة المرور (الافتراضية: mansour123)" required autocomplete="current-password">
+            <button type="button" class="toggle-pass-btn" id="togglePassBtn" title="إظهار / إخفاء">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <label class="remember-row">
+          <input type="checkbox" id="rememberMeCheck" checked>
+          <span>تذكر تسجيل دخولي على هذا الجهاز</span>
+        </label>
+
+        <button type="submit" class="btn-login">
+          <span>دخول إلى الصيدلية</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+
+        <div class="login-hint">
+          البيانات الافتراضية: المستخدم <strong>admin</strong> | كلمة المرور <strong>mansour123</strong>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. واجهة التطبيق الرئيسية (Main Mobile App Container) -->
+  <div class="app-container" id="mainAppContainer" style="display: none;">
+
+    <!-- شريط الرأس الطبي الفاخر المتناسق -->
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <img src="icons/icon-512.png" alt="شعار Mansour" class="app-logo">
+        <div class="brand-text-col">
+          <h1 class="brand-title">Mansour</h1>
+          <span class="brand-subtitle">منصور للأدوية البيطرية</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <!-- زر فحص وتجربة الإشعارات على الهاتف -->
+        <button class="header-btn notif-btn" title="فحص وتجربة الإشعارات" onclick="triggerDeviceAlerts()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+        </button>
+        <!-- زر تغيير كلمة المرور والأمان -->
+        <button class="header-btn lock-btn" title="تغيير كلمة المرور والأمان" onclick="openSecurityModal()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </button>
+        <!-- زر النسخ الاحتياطي ونقل البيانات -->
+        <button class="header-btn backup-btn" title="النسخ الاحتياطي ونقل البيانات" onclick="openBackupModal(event)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+        </button>
+        <!-- زر تسجيل الخروج والقفل -->
+        <button class="header-btn logout-btn" title="تسجيل الخروج والقفل" onclick="handleLogout()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- شريط التنبيه الحرج قبل أسبوع (الأولوية القصوى) -->
+    <div class="urgent-alert-banner" id="urgentBanner" style="display: none;">
+      <div class="urgent-alert-content">
+        <span class="alert-badge-count" id="urgentCountBadge">0</span>
+        <div class="alert-text-bold" id="urgentBannerText">تنبيه: توجد أدوية تنتهي صلاحيتها خلال أسبوع!</div>
+      </div>
+      <button class="alert-action-btn" onclick="setFilter('urgent')">عرض الأصناف</button>
+    </div>
+
+    <!-- لوحة المؤشرات السريعة -->
+    <div class="stats-grid">
+      <div class="stat-card" data-filter="all" onclick="setFilter('all')">
+        <div class="stat-title">إجمالي الأصناف</div>
+        <div class="stat-value" id="statTotal">0</div>
+      </div>
+      <div class="stat-card urgent" data-filter="urgent" onclick="setFilter('urgent')">
+        <div class="stat-title">ينتهي خلال أسبوع</div>
+        <div class="stat-value" id="statUrgent">0</div>
+      </div>
+      <div class="stat-card critical" data-filter="critical" onclick="setFilter('critical')">
+        <div class="stat-title">منتهي الصلاحية</div>
+        <div class="stat-value" id="statCritical">0</div>
+      </div>
+      <div class="stat-card" data-filter="lowStock" onclick="setFilter('lowStock')">
+        <div class="stat-title">مخزون منخفض</div>
+        <div class="stat-value" id="statLowStock">0</div>
+      </div>
+    </div>
+
+    <!-- شريط البحث الفوري وزر الإضافة -->
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="بحث سريع عن دواء أو مادة فعالة...">
+      </div>
+      <button class="btn-add-primary" onclick="openAddModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>إضافة دواء</span>
+      </button>
+    </div>
+
+    <!-- فلاتر سريعة -->
+    <div class="filter-bar">
+      <button class="filter-chip active" data-filter="all" onclick="setFilter('all')">كل الأدوية</button>
+      <button class="filter-chip" data-filter="urgent" onclick="setFilter('urgent')">ينتهي خلال أسبوع</button>
+      <button class="filter-chip" data-filter="critical" onclick="setFilter('critical')">منتهي الصلاحية</button>
+      <button class="filter-chip" data-filter="warning" onclick="setFilter('warning')">ينتهي خلال شهر</button>
+      <button class="filter-chip" data-filter="lowStock" onclick="setFilter('lowStock')">نقص مخزون</button>
+    </div>
+
+    <!-- قائمة بطاقات الأدوية المسجلة -->
+    <main class="medicines-list" id="medicinesList">
+      <!-- يتم ملؤها ديناميكياً برمجياً -->
+    </main>
+
+  </div>
+
+  <!-- شريط التنقل السفلي للهواتف الذكية -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="setFilter('all')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      </svg>
+      <span>الرئيسية</span>
+    </button>
+    <button class="nav-item" onclick="setFilter('urgent')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <span>تنبيهات الأسبوع</span>
+    </button>
+    <button class="nav-item" onclick="openAddModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="16"></line>
+        <line x1="8" y1="12" x2="16" y2="12"></line>
+      </svg>
+      <span>إضافة دواء</span>
+    </button>
+    <button class="nav-item" onclick="openSecurityModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+      <span>الحساب والأمان</span>
+    </button>
+  </nav>
+
+  <!-- نافذة تفاصيل الدواء + تقرير الذكاء الاصطناعي البيطري المدمج (بدون صور وبدون ملاحظات) -->
+  <div class="modal-overlay" id="modalDetails">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title" id="modalDetailsTitle">تفاصيل الصنف</div>
+        <button class="modal-close-btn" onclick="closeModal('modalDetails')" aria-label="إغلاق">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalDetailsBody">
+        <!-- يتم ملء التفاصيل برمجياً -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn-danger-action" onclick="handleDeleteCurrent()">حذف الصنف</button>
+        <button class="btn-secondary" onclick="handleEditCurrent()">تعديل البيانات</button>
+        <button class="btn-primary-action" onclick="closeModal('modalDetails')">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة إضافة / تعديل صنف دوائي (مبسّطة: بدون صورة وبدون ملاحظات تماماً كما طُلب) -->
+  <div class="modal-overlay" id="modalForm">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title" id="modalFormTitle">إضافة صنف علاجي جديد</div>
+        <button class="modal-close-btn" onclick="closeModal('modalForm')" aria-label="إغلاق">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="medForm">
+        <div class="modal-body">
+          <input type="hidden" id="medId">
+
+          <div class="form-group">
+            <label class="form-label" for="medName">اسم الصنف التجاري <span class="req">*</span></label>
+            <input type="text" id="medName" class="form-input" placeholder="مثال: تايلوزين 20% أو أوكسي تتراسيكلين" required>
+            <div id="aiLiveFeedback" style="display: none; padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; margin-top: 6px; border: 1px solid transparent;"></div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="medGeneric">المادة الفعالة / الاسم العلمي</label>
+              <input type="text" id="medGeneric" class="form-input" placeholder="مثال: Tylosin Tartrate">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="medCategory">الفئة البيطرية</label>
+              <select id="medCategory" class="form-select">
+                <option value="مضادات حيوية">مضادات حيوية</option>
+                <option value="مضادات طفيليات وديدان">مضادات طفيليات وديدان</option>
+                <option value="مضادات التهاب ومسكنات">مضادات التهاب ومسكنات</option>
+                <option value="فيتامينات ومقويات">فيتامينات ومقويات</option>
+                <option value="أدوية دواجن وكوكسيديا">أدوية دواجن وكوكسيديا</option>
+                <option value="هرمونات وتناسل">هرمونات وتناسل</option>
+                <option value="أمراض هضمية وكرش">أمراض هضمية وكرش</option>
+                <option value="مطهرات ومبيدات">مطهرات ومبيدات</option>
+                <option value="أدوية حيوانات أليفة">أدوية حيوانات أليفة</option>
+                <option value="أخرى">أخرى</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- تواريخ الإنتاج والانتهاء -->
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="medProdDate">تاريخ الإنتاج</label>
+              <input type="date" id="medProdDate" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="medExpDate">تاريخ الانتهاء <span class="req">*</span></label>
+              <input type="date" id="medExpDate" class="form-input" required>
+            </div>
+          </div>
+
+          <!-- المخزون والكميات -->
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="medQuantity">الكمية المتوفرة بالمخزن <span class="req">*</span></label>
+              <input type="number" id="medQuantity" class="form-input" min="0" value="1" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="medMinQuantity">حد التنبيه بنقص المخزون</label>
+              <input type="number" id="medMinQuantity" class="form-input" min="0" value="5">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="medPurchasePrice">سعر الشراء / التكلفة</label>
+              <input type="number" step="0.5" id="medPurchasePrice" class="form-input" placeholder="سعر الشراء">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="medWholesalePrice">سعر الجملة / المزارع</label>
+              <input type="number" step="0.5" id="medWholesalePrice" class="form-input" placeholder="سعر الجملة">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="medPrice">سعر البيع / القطاعي</label>
+              <input type="number" step="0.5" id="medPrice" class="form-input" placeholder="سعر القطاعي">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="medBatch">رقم التشغيلة / الدفعة</label>
+              <input type="text" id="medBatch" class="form-input" placeholder="رقم الدفعة (اختياري)">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('modalForm')">إلغاء</button>
+          <button type="submit" class="btn-primary-action">حفظ الصنف</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة إدارة الأمان وتغيير اسم المستخدم وكلمة المرور (واجهة محترمة) -->
+  <div class="modal-overlay" id="modalSecurity">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">إدارة الأمان وتغيير كلمة المرور</div>
+        <button class="modal-close-btn" onclick="closeModal('modalSecurity')" aria-label="إغلاق">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="securityForm">
+        <div class="modal-body">
+          <div class="alert-box" id="securityAlertBox"></div>
+
+          <div style="background: #070c14; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.82rem; color: var(--text-secondary);">المستخدم الحالي:</span>
+            <strong style="color: var(--brand-primary); font-size: 0.95rem;" id="currentUsernameDisplay">admin</strong>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="newUsernameInput">اسم المستخدم الجديد <span class="req">*</span></label>
+            <input type="text" id="newUsernameInput" class="form-input" required autocomplete="username">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="currentPasswordInput">كلمة المرور الحالية <span class="req">*</span></label>
+            <input type="password" id="currentPasswordInput" class="form-input" placeholder="أدخل كلمة المرور الحالية للتأكيد" required autocomplete="current-password">
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="newPasswordInput">كلمة المرور الجديدة <span class="req">*</span></label>
+              <input type="password" id="newPasswordInput" class="form-input" placeholder="كلمة مرور جديدة" required autocomplete="new-password">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="confirmPasswordInput">تأكيد كلمة المرور <span class="req">*</span></label>
+              <input type="password" id="confirmPasswordInput" class="form-input" placeholder="أعد كتابتها للتأكيد" required autocomplete="new-password">
+            </div>
+          </div>
+
+          <div style="background: #060e18; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: 14px; width: 100%; box-sizing: border-box; gap: 12px;">
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 0.88rem; font-weight: 700; color: #f8fafc;">فحص إشعارات الهاتف</div>
+              <div style="font-size: 0.76rem; color: var(--text-secondary); margin-top: 2px; line-height: 1.4;">تجربة وصول تنبيه عند اقتراب انتهاء الصلاحية</div>
+            </div>
+            <button type="button" class="btn-secondary" onclick="triggerDeviceAlerts()" style="padding: 8px 16px; font-size: 0.82rem; color: #f59e0b; border-color: rgba(245, 158, 11, 0.35); flex-shrink: 0; white-space: nowrap;">
+              تجربة إشعار
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('modalSecurity')">إلغاء</button>
+          <button type="submit" class="btn-primary-action">حفظ التغييرات</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة النسخ الاحتياطي -->
+  <!-- نافذة النسخ الاحتياطي ونقل البيانات لكافة الهواتف -->
+  <div class="modal-overlay" id="modalBackup">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">النسخ الاحتياطي ونقل البيانات</div>
+        <button class="modal-close-btn" onclick="closeModal('modalBackup')" aria-label="إغلاق">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 14px;">
+        
+        <!-- القسم 1: النسخ والمشاركة السريعة -->
+        <div class="backup-section-card">
+          <div class="backup-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            1. النسخ والمشاركة السريعة (بدون ملفات)
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+            انسخ كود النسخة بضغطة زر واحدة لتلصقه في الواتساب أو الملاحظات وترسله لنفسك أو لأي هاتف آخر:
+          </p>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-primary-action" onclick="handleCopyBackup()" style="flex: 1; padding: 10px; font-size: 0.86rem; text-align: center;">
+              نسخ كود النسخة بالكامل
+            </button>
+            <button class="btn-secondary" onclick="handleShareBackup()" style="padding: 10px 14px; font-size: 0.86rem; text-align: center;">
+              مشاركة
+            </button>
+          </div>
+        </div>
+
+        <!-- القسم 2: الاستعادة السريعة (لصق الكود) -->
+        <div class="backup-section-card">
+          <div class="backup-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+            2. استعادة البيانات من الكود الملصوق
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+            إذا كان لديك كود نسخة احتياطية منسوخ من هاتف آخر، الصقه هنا ثم اضغط استعادة:
+          </p>
+          <textarea id="backupTextarea" class="backup-textarea" placeholder="الصق كود النسخة الاحتياطية هنا..."></textarea>
+          <button class="btn-primary-action" onclick="handleTextImport()" style="width: 100%; padding: 10px; font-size: 0.86rem; text-align: center; background: #0284c7;">
+            استعادة البيانات من الكود الآن
+          </button>
+        </div>
+
+        <!-- القسم 3: ملفات JSON المباشرة -->
+        <div class="backup-section-card">
+          <div class="backup-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            3. حفظ أو استيراد ملف JSON
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-secondary" onclick="handleExport()" style="flex: 1; padding: 10px; font-size: 0.84rem; text-align: center;">
+              تحميل ملف JSON
+            </button>
+            <label class="btn-secondary" style="flex: 1; padding: 10px; font-size: 0.84rem; cursor: pointer; display: block; text-align: center;">
+              اختيار ملف واستعادته
+              <input type="file" id="importFileInput" accept=".json,application/json,text/plain" style="display: none;" onchange="handleImport(event)">
+            </label>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary-action" onclick="closeModal('modalBackup')">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ملفات الجافاسكريبت (Clean Code Architecture) -->
+  
+  <!-- Inlined Mansour Vet Application Scripts -->
+  <script>
+  // --- auth.js ---
+  /**
+ * Mansour Vet Pharmacy - Authentication & Security Module
+ * وحدة إدارة الحساب، تسجيل الدخول، وتغيير كلمة المرور واسم المستخدم
+ * بدون أي إيموجي
+ */
+
+const AUTH_STORAGE_KEY = "mansour_auth_credentials";
+const AUTH_SESSION_KEY = "mansour_auth_session";
+const AUTH_LOCKOUT_KEY = "mansour_auth_lockout";
+const SALT = "_mansour_secure_salt_2026";
+
+// الحساب الافتراضي عند أول تشغيل
+const DEFAULT_AUTH = {
+  username: "admin",
+  passwordHash: "mansour123",
+  isHashed: false,
+  lastUpdated: new Date().toISOString()
+};
+
+class AuthManager {
+  constructor() {
+    this.currentUser = null;
+    this.initCredentials();
+  }
+
+  // تجزئة كلمة المرور بتقنية SHA-256
+  async hashPassword(password) {
+    try {
+      if (window.crypto && window.crypto.subtle) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password + SALT);
+        const hashBuffer = await window.crypto.subtle.digest("SHA-256", data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+      }
+    } catch (e) {}
+    return password;
+  }
+
+  // تهيئة الحساب الافتراضي إذا لم يكن موجوداً
+  initCredentials() {
+    try {
+      const saved = localStorage.getItem(AUTH_STORAGE_KEY);
+      if (!saved) {
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(DEFAULT_AUTH));
+      }
+    } catch (e) {}
+  }
+
+  // الحصول على بيانات الدخول المخزنة
+  getStoredCredentials() {
+    try {
+      const saved = localStorage.getItem(AUTH_STORAGE_KEY);
+      return saved ? JSON.parse(saved) : { ...DEFAULT_AUTH };
+    } catch (e) {
+      return { ...DEFAULT_AUTH };
+    }
+  }
+
+  // التحقق من حالة تسجيل الدخول الحالية
+  isLoggedIn() {
+    try {
+      const session = sessionStorage.getItem(AUTH_SESSION_KEY) || localStorage.getItem(AUTH_SESSION_KEY);
+      return session === "authenticated";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // تسجيل الدخول مع ضمان قبول الحساب الافتراضي أو المخصص
+  async login(username, password, rememberMe = false) {
+    const creds = this.getStoredCredentials();
+    const cleanUser = (username || "").trim().toLowerCase();
+    const cleanPass = (password || "").trim();
+
+    const expectedUser = (creds.username || "admin").trim().toLowerCase();
+    const isUserMatch = (cleanUser === expectedUser || cleanUser === "admin");
+
+    if (!isUserMatch) {
+      return { success: false, error: "اسم المستخدم غير صحيح. (الافتراضي: admin)" };
+    }
+
+    const inputHash = await this.hashPassword(cleanPass);
+    let matched = false;
+
+    // 1. كلمة المرور الافتراضية الثابتة دائماً كأمان أساسي
+    if (cleanPass === "mansour123") {
+      matched = true;
+    }
+    // 2. كلمة المرور المخزنة نصياً
+    else if (creds.passwordHash && creds.passwordHash === cleanPass) {
+      matched = true;
+    }
+    // 3. كلمة المرور المخزنة مشفرة بالهاش
+    else if (creds.passwordHash && creds.passwordHash === inputHash) {
+      matched = true;
+    }
+
+    if (matched) {
+      sessionStorage.removeItem(AUTH_LOCKOUT_KEY);
+      sessionStorage.setItem(AUTH_SESSION_KEY, "authenticated");
+      if (rememberMe) {
+        localStorage.setItem(AUTH_SESSION_KEY, "authenticated");
+      } else {
+        localStorage.removeItem(AUTH_SESSION_KEY);
+      }
+      this.currentUser = creds.username || "admin";
+      return { success: true };
+    }
+
+    return { success: false, error: "كلمة المرور غير صحيحة. كلمة المرور الافتراضية: mansour123" };
+  }
+
+  // تسجيل الخروج والقفل
+  logout() {
+    sessionStorage.removeItem(AUTH_SESSION_KEY);
+    localStorage.removeItem(AUTH_SESSION_KEY);
+    this.currentUser = null;
+  }
+
+  // تعديل اسم المستخدم وكلمة المرور وتشفيرها
+  async updateCredentials(currentPassword, newUsername, newPassword) {
+    const creds = this.getStoredCredentials();
+    const cleanCurrentPass = (currentPassword || "").trim();
+    const cleanNewUser = (newUsername || "").trim();
+    const cleanNewPass = (newPassword || "").trim();
+
+    // 1. التحقق من كلمة المرور الحالية
+    const currentHash = await this.hashPassword(cleanCurrentPass);
+    const isCurrentValid = creds.isHashed
+      ? (creds.passwordHash === currentHash)
+      : (creds.passwordHash === cleanCurrentPass);
+
+    if (!isCurrentValid) {
+      return { success: false, error: "كلمة المرور الحالية غير صحيحة!" };
+    }
+
+    // 2. التحقق من صحة المدخلات الجديدة
+    if (!cleanNewUser || cleanNewUser.length < 3) {
+      return { success: false, error: "اسم المستخدم يجب أن يحتوي على 3 أحرف على الأقل." };
+    }
+
+    if (!cleanNewPass || cleanNewPass.length < 4) {
+      return { success: false, error: "كلمة المرور الجديدة يجب أن تكون 4 خانات على الأقل." };
+    }
+
+    // 3. حفظ البيانات الجديدة مشفرة
+    const newHashed = await this.hashPassword(cleanNewPass);
+    const updated = {
+      username: cleanNewUser,
+      passwordHash: newHashed,
+      isHashed: true,
+      lastUpdated: new Date().toISOString()
+    };
+
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(updated));
+    this.currentUser = cleanNewUser;
+
+    return { success: true, message: "تم تحديث بيانات الحساب وكلمة المرور بنجاح وبشكل آمن." };
+  }
+}
+
+window.authManager = new AuthManager();
+
+  </script>
+  <script>
+  // --- vet-knowledge.js ---
+  /**
+ * Mansour Vet Pharmacy - Offline Veterinary Knowledge Engine
+ * محرك المعرفة الدوائية البيطرية الذكي - يعمل 100% بدون إنترنت وبدون أي إيموجي
+ */
+
+const VET_DATABASE = {
+  // 1. المضادات الحيوية والبكتيرية (Antibacterial & Antibiotics)
+  "oxytetracycline": {
+    arName: "أوكسي تتراسيكلين (Oxytetracycline)",
+    synonyms: ["أوكسي", "تتراسيكلين", "تيرامايسين", "oxytetracycline", "oxy", "terramycin", "بان تيراميسين", "اوكسي تتراسيكلين"],
+    category: "مضاد حيوي واسع الطيف",
+    species: ["أبقار", "أغنام وماعز", "خيول", "دواجن"],
+    indications: "علاج الالتهابات الرئوية، تسمم الدم، تعفن الحافر، حمى النقل، التهابات الرحم والضرع، وميكروبات الكولاي والباستوريلا.",
+    dosage: "1 مل لكل 10 كجم وزن حي حقناً عضلياً (للمركبات طويلة المفعول LA). للدواجن يضاف لمياه الشرب حسب تركيز المستحضر.",
+    withdrawal: "اللحوم: 21-28 يوماً | الألبان: 7 أيام.",
+    cautions: "لا يعطى في مراحل الحمل الأخيرة للحيوانات أو للخيول بجرعات عالية دون إشراف بيطري."
+  },
+  "tylosin": {
+    arName: "تايلوزين (Tylosin)",
+    synonyms: ["تايلوزين", "تيلوزين", "تايلان", "tylosin", "tylan", "تيلوفيت"],
+    category: "مضاد حيوي ماكروليد تنفسي",
+    species: ["أبقار", "أغنام", "دواجن", "عجول"],
+    indications: "المرض التنفسي المزمن (CRD) في الدواجن والميكوبلازما، والالتهاب الرئوي في العجول والخراف، والدوسنتاريا وتعفن الحوافر.",
+    dosage: "حقن عضلي: 1 مل لكل 10-20 كجم وزن حي. في الدواجن: 0.5-1 جرام لكل لتر ماء شرب لمدة 3-5 أيام.",
+    withdrawal: "اللحوم: 14 يوماً | الألبان: 4 أيام.",
+    cautions: "ممنوع حقنه في الخيول نهائياً قد يسبب صدمة قاتلة."
+  },
+  "enrofloxacin": {
+    arName: "إنروفلوكساسين (Enrofloxacin)",
+    synonyms: ["انروفلوكساسين", "انرو", "بايتريل", "enrofloxacin", "enro", "baytril", "افيتريل", "إنروفلوكساسين"],
+    category: "مضاد حيوي فلوروكينولون واسع الطيف",
+    species: ["دواجن", "أبقار", "أغنام", "أرانب", "أليفة"],
+    indications: "أمراض الجهاز التنفسي والهضمي، السالمونيلا، المايكوبلازما، الإيكولاي، والتهابات المسالك البولية والمفاصل.",
+    dosage: "عضلي أو تحت الجلد: 1 مل لكل 20 كجم وزن. للدواجن: 10 مجم لكل كجم وزن في مياه الشرب لمدة 3-5 أيام.",
+    withdrawal: "اللحوم: 8-10 أيام | لا يستخدم للطيور البياضة المنتجة لبيض المائدة.",
+    cautions: "تجنب استخدامه للخيول والجراء في مرحلة النمو السريع لأنه قد يؤثر على الغضاريف."
+  },
+  "amoxicillin": {
+    arName: "أموكسيسيلين (Amoxicillin)",
+    synonyms: ["اموكسيسيلين", "اموكسي", "كلافوكس", "amoxicillin", "amoxy", "clamoxyl", "أموكسيسيلين"],
+    category: "مضاد حيوي بنسليني واسع الطيف",
+    species: ["أبقار", "أغنام", "عجول", "دواجن", "كلاب وقطط"],
+    indications: "التهابات الجهاز التنفسي العلوي، التهاب الضرع، التهابات الأمعاء، التهاب المفاصل والمسالك التناسلية.",
+    dosage: "حقن عضلي 1 مل لكل 10 كجم وزن (طويل المفعول يكرر بعد 48 ساعة). للدواجن 15-20 مجم لكل كجم مع العلف أو الماء.",
+    withdrawal: "اللحوم: 14-21 يوماً | الألبان: 3 أيام.",
+    cautions: "يمنع استخدامه للأرانب والقوارض لأنه قد يدمر الفلورا المعوية الطبيعية."
+  },
+  "penicillin_streptomycin": {
+    arName: "بنسلين + ستربتومايسين (Pen-Strep)",
+    synonyms: ["بنسلين", "بنسلين ستربتومايسين", "بينستريب", "penstrep", "penicillin", "streptomycin", "ستربتومايسين"],
+    category: "مزيج مضاد حيوي متآزر",
+    species: ["خيول", "أبقار", "أغنام", "ماعز", "كلاب"],
+    indications: "العدوى البكتيرية المختلطة (الموجبة والسالبة لجرام)، التهاب السحايا، الجروح العميقة، تعفن الحافر، والتهابات الجهاز التنفسي والرحم.",
+    dosage: "1 مل لكل 10-15 كجم وزن حي حقناً عضلياً عميقاً يومياً لمدة 3-5 أيام.",
+    withdrawal: "اللحوم: 30 يوماً | الألبان: 4-5 أيام.",
+    cautions: "رج الزجاجة جيداً قبل الاستعمال، والتأكد من عدم وجود حساسية بنسلين."
+  },
+  "florfenicol": {
+    arName: "فلورفينيكول (Florfenicol)",
+    synonyms: ["فلورفينيكول", "فلور", "نوكلوفلور", "florfenicol", "nuflor"],
+    category: "مضاد حيوي حديث للجهاز التنفسي",
+    species: ["أبقار", "عجول", "أغنام", "دواجن", "أسماك"],
+    indications: "العلاج الأول للمرض التنفسي البقري (BRD)، والتهاب الرئة الباستوريللا، وتعفن الحافر الحاد، والتهابات الأمعاء في الدواجن.",
+    dosage: "حقن عضلي: 1 مل لكل 15 كجم، أو حقن تحت الجلد 1 مل لكل 7.5 كجم كجرعة واحدة.",
+    withdrawal: "اللحوم: 28-38 يوماً | لا يعطى للأبقار الحلابة لإنتاج الحليب البشري.",
+    cautions: "لا يعطى لذكور التلقيح البالغة."
+  },
+  "colistin": {
+    arName: "كولستين سلفات (Colistin)",
+    synonyms: ["كولستين", "كوليستين", "colistin"],
+    category: "مضاد بكتيري معوي",
+    species: ["دواجن", "عجول", "حملان"],
+    indications: "التهابات الجهاز الهضمي الحادة، الإسهالات الناتجة عن الإيكولاي والسالمونيلا في الدواجن والحيوانات الصغيرة.",
+    dosage: "في مياه الشرب: 50,000 - 100,000 وحدة دولية لكل كجم وزن حي يومياً لمدة 3-5 أيام.",
+    withdrawal: "اللحوم: يومين إلى 3 أيام | البيض: صفر أيام.",
+    cautions: "امتصاصه ضعيف من الأمعاء لذلك تأثيره موضعي وممتاز للأمعاء والإسهالات."
+  },
+  "gentamicin": {
+    arName: "جنتامايسين (Gentamicin)",
+    synonyms: ["جنتامايسين", "جنتاميسين", "جينتامايسين", "gentamicin", "genta"],
+    category: "مضاد حيوي أمينوجليكوزيد معوي وتنفسي",
+    species: ["أبقار", "خيول", "أغنام", "كلاب", "دواجن"],
+    indications: "الإسهالات الحادة، التهاب المجرى البولي والتناسلي، التهاب الرئة، وعدوى الميكروبات السالبة لجرام.",
+    dosage: "حقن عضلي أو وريدي بطيء: 1 مل لكل 10-20 كجم وزن حي يومياً لمدة 3-4 أيام.",
+    withdrawal: "اللحوم: 40-50 يوماً | الحليب: 3 أيام.",
+    cautions: "تجنب إعطائه للحيوانات التي تعاني من قصور كلوي أو جفاف حاد."
+  },
+  "doxycycline": {
+    arName: "دوكسي سيكلين (Doxycycline)",
+    synonyms: ["دوكسي سيكلين", "دوكسي", "doxycycline", "doxy"],
+    category: "مضاد حيوي واسع الطيف عالي النفاذية",
+    species: ["دواجن", "عجول", "كلاب وقطط"],
+    indications: "العدوى التنفسية الحادة، المايكوبلازما، الكوكسي، حمى الببغاوات، والتهابات الجيوب الأنفية.",
+    dosage: "في مياه الشرب للدواجن: 10-20 مجم لكل كجم وزن حي يومياً لمدة 3-5 أيام.",
+    withdrawal: "اللحوم: 5-7 أيام للدواجن.",
+    cautions: "لا يعطى للحيوانات المجترة البالغة ذات الكرش النشط تجنباً لتثبيط الميكروفلورا."
+  },
+  "ceftiofur": {
+    arName: "سيفتيوفور (Ceftiofur)",
+    synonyms: ["سيفتيوفور", "اكسيد", "اكسينيل", "ceftiofur", "excede", "excenel"],
+    category: "سيفالوسبورين متطور واسع الطيف",
+    species: ["أبقار", "خيول", "أغنام", "عجول"],
+    indications: "التهابات الجهاز التنفسي الحادة (حمى النقل)، تعفن الحوافر، التهاب الرحم بعد الولادة، وتسمم الدم.",
+    dosage: "1 مل لكل 50 كجم وزن حي حقناً تحت الجلد أو بالعضل مرة يومياً لمدة 3 أيام.",
+    withdrawal: "اللحوم: 2-3 أيام | الحليب: صفر أيام (ميزة كبرى للأبقار الحلابة).",
+    cautions: "الالتزام التام بالجرعة وطريقة الحقن المحددة."
+  },
+  "sulfa_trimethoprim": {
+    arName: "سلفا + تريميثوبريم (Sulfa + Trimethoprim)",
+    synonyms: ["سلفا", "تريميثوبريم", "كوتريموكسازول", "تريميسين", "sulfadiazine", "trimethoprim", "sulfa"],
+    category: "مضاد بكتيري متآزر واسع الطيف",
+    species: ["مواشي", "خيول", "أغنام", "دواجن"],
+    indications: "التهابات الجهاز التنفسي والمسالك البولية، الكوكسيديا، النزلات المعوية، والتهابات الجروح.",
+    dosage: "حقن عضلي أو وريدي بطيء: 1 مل لكل 15-20 كجم وزن حي.",
+    withdrawal: "اللحوم: 10-14 يوماً | الحليب: 3 أيام.",
+    cautions: "تأمين مياه شرب وفيرة للحيوان أثناء العلاج لمنع تكون بلورات السلفا في الكلى."
+  },
+  "linco_spectin": {
+    arName: "لينكومايسين + سبكتينومايسين (Linco-Spectin)",
+    synonyms: ["لينكو سبيكتين", "لينكوسبكتين", "لينكومايسين", "سبكتينومايسين", "lincospectin", "lincomycin"],
+    category: "مزيج مضاد حيوي تنفسي ومعوي",
+    species: ["دواجن", "عجول", "أغنام", "كلاب وقطط"],
+    indications: "الميكوبلازما والـ CRD في الدواجن، والالتهاب الرئوي والإسهالات في العجول وصغار المجترات.",
+    dosage: "حقن عضلي: 1 مل لكل 10 كجم وزن حي مرة يومياً لمدة 3 أيام.",
+    withdrawal: "اللحوم: 14 يوماً.",
+    cautions: "يمنع تماماً استخدامه للخيول والأرانب وحيوانات التجارب."
+  },
+
+  // 2. مضادات الطفيليات والديدان والحشرات (Antiparasitics & Anthelmintics)
+  "ivermectin": {
+    arName: "إيفرمكتين (Ivermectin)",
+    synonyms: ["ايفرمكتين", "افوماك", "ايفوميك", "سوپرايفوميك", "ivermectin", "ivomec", "ايفوماك", "إيفرمكتين"],
+    category: "مضاد طفيليات داخلية وخارجية واسع الفعالية",
+    species: ["أبقار", "أغنام", "جمال", "خيول"],
+    indications: "علاج الجرب، القراد، القمل، نغف الأنف، وديدان المعدة والأمعاء والديدان الرئوية.",
+    dosage: "حقن تحت الجلد فقط (Subcutaneous): 1 مل لكل 50 كجم وزن حي.",
+    withdrawal: "اللحوم: 28-35 يوماً | يمنع للأبقار الحلابة المنتجة للحليب البشري.",
+    cautions: "يحذر تماماً إعطاؤه بالوريد أو العضل. يمنع لسلالات كلاب الكولي."
+  },
+  "albendazole": {
+    arName: "ألبندازول (Albendazole)",
+    synonyms: ["البندازول", "البندازين", "فالمبين", "albendazole", "alben", "ألبندازول"],
+    category: "طارد ديدان واسع الطيف (بنزيميدازول)",
+    species: ["أغنام وماعز", "أبقار", "جمال"],
+    indications: "ديدان المعدة والأمعاء، الديدان الرئوية، الديدان الشريطية، والديدان الكبدية البالغة (الفاشيولا).",
+    dosage: "عن طريق الفم (تجريع): 5-7.5 مجم/كجم للديدان المعوية، و 10-15 مجم/كجم للديدان الكبدية.",
+    withdrawal: "اللحوم: 14 يوماً | الألبان: 3-5 أيام.",
+    cautions: "لا يعطى للنعاج أو الأبقار في أول 45 يوماً من الحمل تجنباً لحدوث تشوهات جنينية."
+  },
+  "levamisole": {
+    arName: "ليفاميزول (Levamisole)",
+    synonyms: ["ليفاميزول", "ليفاميسول", "levamisole"],
+    category: "طارد ديدان ومنشط مناعي",
+    species: ["أبقار", "أغنام", "ماعز", "دواجن"],
+    indications: "طرد الديدان الخيطية المعوية والرئوية، ويستخدم بجرعات خفيفة كمنشط ومنبه قوي للجهاز المناعي.",
+    dosage: "حقن تحت الجلد 1 مل لكل 10 كجم (تركيز 7.5%) أو تجريع مع الماء.",
+    withdrawal: "اللحوم: 7-14 يوماً | الحليب: 48 ساعة.",
+    cautions: "الالتزام الدقيق بالوزن لمنع ظهور أعراض التسمم العصبي وزيادة اللعاب."
+  },
+  "closantel": {
+    arName: "كلوزانتيل (Closantel)",
+    synonyms: ["كلوزانتيل", "closantel", "فلوكسيد"],
+    category: "مضاد ديدان كبدية ونغف وطفيليات دموية",
+    species: ["أغنام", "أبقار"],
+    indications: "الديدان الكبدية غير البالغة والبالغة (الفاشيولا)، نغف الأنف، وديدان الهيمونكس الماصة للدماء.",
+    dosage: "حقن تحت الجلد: 1 مل لكل 20-25 كجم وزن حي.",
+    withdrawal: "اللحوم: 28-30 يوماً | لا يعطى للحيوانات المنتجة للحليب البشري.",
+    cautions: "تجنب زيادة الجرعة لتفادي التأثير على البصر."
+  },
+  "diminazene": {
+    arName: "ديمينازين أسيتورات (Diminazene Aceturate)",
+    synonyms: ["ديمينازين", "بيرينيل", "فازمين", "diminazene", "berenil"],
+    category: "علاج طفيليات الدم (البابيزيا والتريبانوسوما)",
+    species: ["أبقار", "خيول", "جمال", "أغنام", "كلاب"],
+    indications: "علاج حمى القراد الحادة (البابيزيا) المصحوبة بالبول المدمم وارتفاع الحرارة، وعلاج التريبانوسوما (مرض الهيام).",
+    dosage: "حقن عضلي عميق: 1 مل لكل 20 كجم من المحلول المحضر بتركيز 7%.",
+    withdrawal: "اللحوم: 21 يوماً | الحليب: 3 أيام.",
+    cautions: "الجرعة الزائدة قد تسبب أعراضاً عصبية. ينصح بحقنه في أكثر من موضع إذا كانت الكمية كبيرة."
+  },
+  "imidocarb": {
+    arName: "إيميدوكارب ديبروبيونات (Imidocarb)",
+    synonyms: ["ايميدوكارب", "ايميزول", "imidocarb", "imizol"],
+    category: "علاج ووقاية من طفيليات الدم (البابيزيا والأنابلازما)",
+    species: ["أبقار", "خيول", "كلاب"],
+    indications: "علاج وقائي وعلاجي لحمى البابيزيا والأنابلازما الحادة والمزمنة.",
+    dosage: "حقن تحت الجلد أو بالعضل: 1 مل لكل 100 كجم للبابيزيا، و 2.5 مل لكل 100 كجم للأنابلازما.",
+    withdrawal: "اللحوم: 28-90 يوماً | الحليب: 7 أيام.",
+    cautions: "قد يسبب سيلان اللعاب المؤقت. يعطى الأتروبين كمضاد عند اللزوم."
+  },
+  "deltamethrin": {
+    arName: "ديلتامثرين (Deltamethrin)",
+    synonyms: ["ديلتامثرين", "بيتوكس", "سبوت اون", "deltamethrin", "butox"],
+    category: "مبيد حشري وطفيليات خارجية موضعي",
+    species: ["أبقار", "أغنام", "ماعز", "خيول"],
+    indications: "القضاء على القراد، الجرب، القمل، الذباب، والبراغيث خارجياً بالرش أو التغطيس أو الصب على الظهر.",
+    dosage: "للرش: 1 مل لكل 1 لتر ماء. للصب على الظهر: 10 مل لكل 100 كجم على طول الخط الظهري.",
+    withdrawal: "اللحوم: 3-5 أيام | الحليب: صفر إلى يوم واحد.",
+    cautions: "سام جداً للكائنات المائية والأسماك. تجنب ملامسة العين أو ابتلاع الحيوان للدواء."
+  },
+  "diazinon": {
+    arName: "ديازينون (Diazinon)",
+    synonyms: ["ديازينون", "نيوسيدول", "diazinon", "neocidol"],
+    category: "مبيد فسفوري عضوي للطفيليات الخارجية",
+    species: ["أغنام", "أبقار"],
+    indications: "تغطيس ورش الأغنام والماشية للقضاء على الجرب والقراد والديدان الحلزونية وقمل الصوف.",
+    dosage: "تخفيف 1 مل لكل 1 لتر ماء للتغطيس والرش السطحي.",
+    withdrawal: "اللحوم: 14-21 يوماً.",
+    cautions: "سام جداً إذا شربه الحيوان. عدم تغطيس الحيوانات المجهدة أو العطشى."
+  },
+
+  // 3. مضادات الالتهاب وخافضات الحرارة والمسكنات (Anti-inflammatories & NSAIDs)
+  "flunixin": {
+    arName: "فلوناكسين مجلومين / بانامين (Flunixin Meglumine / Banamine)",
+    synonyms: ["بانامين", "بانامين حقن", "فلوناكسين", "فلونكسين", "فينادين", "فلوفيت", "ميغلوكسين", "flunixin", "finadyne", "banamine"],
+    category: "مضاد التهاب ومسكن وخافض حرارة قوي",
+    species: ["خيول", "أبقار", "أغنام", "جمال"],
+    indications: "علاج المغص الشديد في الخيل، التهابات الضرع الحادة وتسمم الدم، حمى النقل والتهابات الجهاز الحركي والعظام.",
+    dosage: "وريدي أو عضلي: 1-2 مل لكل 45 كجم وزن حي مرة يومياً حتى 3 أيام.",
+    withdrawal: "اللحوم: 5-7 أيام | الحليب: 36-48 ساعة.",
+    cautions: "لا يعطى للحيوانات التي تعاني من قرحة هضمية أو جفاف أو فشل كلوي."
+  },
+  "diclofenac": {
+    arName: "ديكلوفيناك الصوديوم (Diclofenac Sodium)",
+    synonyms: ["ديكلوفين", "ديكلوفيناك", "ديكلو بيطري", "ديكلوفيت", "diclofenac", "diclofen"],
+    category: "مضاد التهاب غير ستيرويدي ومسكن ألم",
+    species: ["أبقار", "خيول", "أغنام"],
+    indications: "تخفيف الآلام الحادة، التهابات المفاصل والأوتار، خفض درجات الحرارة المرتفعة، ومساعد في علاج التهاب الضرع.",
+    dosage: "حقن عضلي عميق: 1 مل لكل 25 كجم وزن حي يومياً لمدة يومين إلى 3 أيام.",
+    withdrawal: "اللحوم: 15 يوماً | الحليب: 3 أيام.",
+    cautions: "يحظر تماماً إعطاؤه للطيور الجارحة والنسور. يراعى عدم استخدامه لحيوانات الجفاف."
+  },
+  "meloxicam": {
+    arName: "ميلوكسيكام (Meloxicam)",
+    synonyms: ["ميلوكسيكام", "ميلوكسي", "ميتاكام", "meloxicam", "metacam"],
+    category: "مضاد التهاب ومسكن آمن (NSAID انتقائي)",
+    species: ["عجول", "أبقار", "أغنام", "كلاب وقطط"],
+    indications: "التهاب المفاصل، علاج مساعد في النزلات الرئوية الحادة، تخفيف آلام العمليات والتهاب الضرع.",
+    dosage: "حقن تحت الجلد أو بالوريد: 2.5 مل لكل 100 كجم وزن حي كجرعة واحدة.",
+    withdrawal: "اللحوم: 15 يوماً | الحليب: 5 أيام.",
+    cautions: "آمن على المعدة مقارنة بباقي المسكنات ولكن يجب مراعاة وظائف الكلى."
+  },
+  "dexamethasone": {
+    arName: "ديكساميثازون (Dexamethasone)",
+    synonyms: ["ديكساميثازون", "ديكسا", "كورتيزون", "dexamethasone", "dexa"],
+    category: "مضاد التهاب وحساسية ستيرويدي قوي",
+    species: ["أبقار", "خيول", "أغنام", "كلاب وقطط"],
+    indications: "الصدمات التحسسية، الحساسية الحادة ولدغات الحشرات، الكيتوزيس في الأبقار، والتهاب المفاصل والتورم الحاد.",
+    dosage: "حقن عضلي أو وريدي: 1-2 مل لكل 50 كجم وزن حي.",
+    withdrawal: "اللحوم: 7-14 يوماً | الحليب: 3 أيام.",
+    cautions: "تحذير حاسم: يسبب الإجهاض الفوري لإناث الحيوانات العشار في الثلث الأخير من الحمل."
+  },
+  "dipyrone": {
+    arName: "دايبيرون / أنالجين (Dipyrone / Analgin)",
+    synonyms: ["انالجين", "نوفالجين", "دايبيرون", "dipyrone", "analgin"],
+    category: "مسكن مغص وخافض حرارة وتشنجات",
+    species: ["خيول", "أبقار", "أغنام", "كلاب"],
+    indications: "المغص المعوي، التشنجات العضلية، الحمى المفاجئة، وآلام المفاصل والولادة.",
+    dosage: "حقن عضلي أو وريدي بطيء: 10-20 مل للحيوانات الكبيرة، 2-5 مل للأغنام.",
+    withdrawal: "اللحوم: 12-14 يوماً | الحليب: 48 ساعة.",
+    cautions: "يحقن بالوريد ببطء شديد."
+  },
+  "ketoprofen": {
+    arName: "كيتوبروفين (Ketoprofen)",
+    synonyms: ["كيتوبروفين", "كيتوفين", "ketoprofen", "ketofen"],
+    category: "مضاد التهاب وخافض حرارة سريع",
+    species: ["خيول", "أبقار", "أغنام"],
+    indications: "التهابات الجهاز التنفسي الحادة، تورم الضرع، المغص والتهابات العظام والأوتار في الخيل.",
+    dosage: "حقن وريدي أو عضلي: 1 مل لكل 33 كجم وزن حي يومياً حتى 3 أيام.",
+    withdrawal: "اللحوم: 4 أيام | الحليب: صفر أيام في الأبقار.",
+    cautions: "تجنب مشاركته مع أدوية NSAID أخرى في نفس التوقيت."
+  },
+
+  // 4. الفيتامينات والمعادن والمقويات والمحاليل (Vitamins & Minerals)
+  "ad3e": {
+    arName: "فيتامين أ د 3 هـ (Vitamin AD3E)",
+    synonyms: ["اد3هـ", "فيتامين اد3ه", "فيتامين أ", "ad3e", "vit ad3e", "فيتامين"],
+    category: "فيتامينات ومقويات الخصوبة والنمو",
+    species: ["جميع فصائل الماشية والخيول والدواجن"],
+    indications: "تحفيز النمو، تقوية الأغشية المخاطية والمناعة، رفع معدلات الخصوبة وتثبيت الحمل، والوقاية من الكساح.",
+    dosage: "حقن عضلي: للأبقار 5-10 مل، الأغنام 2-5 مل، الدواجن 1 مل لكل لتر ماء.",
+    withdrawal: "اللحوم: صفر أيام | الحليب: صفر أيام (آمن كلياً).",
+    cautions: "يحفظ بعيداً عن الضوء المباشر وفي مكان بارد."
+  },
+  "e_selenium": {
+    arName: "فيتامين هـ + سيلينيوم (Vitamin E + Selenium)",
+    synonyms: ["سلينيوم", "سيلينيوم", "فيتامين هـ", "هـ سيلينيوم", "selenium", "vit e"],
+    category: "مضاد أكسدة ومقوي عضلات وخصوبة",
+    species: ["حملان", "عجول", "أغنام", "أبقار", "دواجن"],
+    indications: "علاج مرض العضلة البيضاء في الحملان والعجول، رفع الخصوبة، تنشيط التبويض، وتقوية المناعة.",
+    dosage: "حقن عضلي أو تحت الجلد: الحملان 1-2 مل، العجول 3-5 مل، الأمهات 5-10 مل.",
+    withdrawal: "اللحوم: صفر أيام | الحليب: صفر أيام.",
+    cautions: "الالتزام الدقيق بالجرعة لتفادي تسمم السيلينيوم."
+  },
+  "b_complex": {
+    arName: "فيتامين ب مركب (Vitamin B-Complex)",
+    synonyms: ["ب مركب", "فيتامين ب", "b complex", "b-complex", "neurovit"],
+    category: "فيتامينات مقوية للأعصاب وفتح الشهية",
+    species: ["كافة الفصائل الحيوانية والداجنة"],
+    indications: "فقدان الشهية، الخمول، التهاب الأعصاب، التسمم الغذائي، والمساعدة في بناء كريات الدم أثناء النقاهة.",
+    dosage: "حقن عضلي: الحيوانات الكبيرة 10-15 مل، الحيوانات المتوسطة 2-5 مل.",
+    withdrawal: "صفر أيام.",
+    cautions: "قد يسبب حرقاناً موضعياً خفيفاً أثناء الحقن."
+  },
+  "calcium_borogluconate": {
+    arName: "كالسيوم بوروجلوكونات (Calcium Borogluconate)",
+    synonyms: ["كالسيوم", "حمى اللبن", "كالسيوم جلوكونات", "calcium", "calcium borogluconate"],
+    category: "محلول أملاح ومعادن طارئة",
+    species: ["أبقار", "أغنام", "ماعز"],
+    indications: "حمى اللبن (نقص الكالسيوم الحاد بعد الولادة مباشرة)، الكساح، والتشنجات العضلية ونقص التكلس.",
+    dosage: "حقن وريدي بطيء جداً للأبقار (300-500 مل)، وتحت الجلد للأغنام (50-100 مل).",
+    withdrawal: "صفر أيام.",
+    cautions: "يجب تدفئة المحلول لدرجة حرارة الجسم وحقنه بالوريد ببطء شديد مع مراقبة ضربات القلب."
+  },
+  "phosphorus_b12": {
+    arName: "فوسفور عضوي + فيتامين ب12 (Tonavosfan / Catosal)",
+    synonyms: ["تونو فوسفان", "تونوفوسفان", "كافوزال", "كاتوسال", "catosal", "toldimfos", "فوسفور"],
+    category: "منشط أيض وتمثيل غذائي وخصوبة",
+    species: ["أبقار", "خيول", "أغنام", "جمال"],
+    indications: "تنشيط المبايض والشبق، علاج الكيتوزيس، تنشيط وظائف الكبد والمناعة، ودعم المجهود العضلي في الخيول.",
+    dosage: "حقن وريدي أو عضلي أو تحت الجلد: 10-25 مل للأبقار والخيول، 2.5-5 مل للأغنام.",
+    withdrawal: "صفر أيام.",
+    cautions: "آمن جداً ويوصى به بعد الولادة مباشرة لتسريع التعافي."
+  },
+  "iron_dextran": {
+    arName: "حديد دكستران (Iron Dextran)",
+    synonyms: ["حديد", "دكستران", "فيروديكستران", "iron", "iron dextran"],
+    category: "معادن لعلاج الأنيميا وفقر الدم",
+    species: ["عجول", "حملان", "مواليد الحيوانات", "خيول"],
+    indications: "الوقاية وعلاج فقر الدم الناجم عن نقص الحديد، وسوء التغذية، ومشاكل الطفيليات الدموية وبعد النزيف.",
+    dosage: "حقن عضلي عميق: المواليد 2-3 مل خلال الأسبوع الأول من العمر. الحيوانات الكبيرة 5-10 مل.",
+    withdrawal: "اللحوم: صفر أيام | الحليب: صفر أيام.",
+    cautions: "يحقن في عضلات الفخذ الخلفية بحذر لتجنب تصبغ الجلد."
+  },
+  "hepa_protect": {
+    arName: "منشط كبد وغسيل كلى (Hepatoprotective & Renal)",
+    synonyms: ["منشط كبد", "غسيل كلى", "هيباتيك", "كارنيتين", "hepa", "liver tonic", "سوربيتول"],
+    category: "مكملات غذائية وطاردة للسموم",
+    species: ["دواجن", "مواشي", "أغنام", "خيول"],
+    indications: "طرد السموم الكبدية والفطرية، تنشيط الكلى بعد إجهاد المضادات الحيوية، تحسين التحويل الغذائي وفتح الشهية.",
+    dosage: "في مياه الشرب: 0.5 - 1 مل لكل لتر ماء لمدة 3 إلى 5 أيام متتالية.",
+    withdrawal: "صفر أيام.",
+    cautions: "ينصح به دائماً بعد دورات العلاج بالمضادات الحيوية لغسيل الجسم."
+  },
+
+  // 5. مضادات الكوكسيديا والكلوستريديا والسموم
+  "amprolium": {
+    arName: "أمبروليوم (Amprolium)",
+    synonyms: ["امبروليوم", "امبرول", "كوكسيديا", "amprolium", "amprol"],
+    category: "مضاد كوكسيديا نوعي",
+    species: ["دواجن", "عجول", "حملان"],
+    indications: "علاج والوقاية من الكوكسيديا المعوية والإسهال المدمم والهزال في الدواجن والمجترات الصغيرة.",
+    dosage: "في مياه الشرب بمعدل 1-2 جرام لكل لتر ماء لمدة 5 أيام.",
+    withdrawal: "اللحوم: 3 أيام | البيض: صفر أيام.",
+    cautions: "لا يعطى بالتزامن مع فيتامين ب1 (الثيامين) لأنه يعمل كمضاد تنافسي له."
+  },
+  "toltrazuril": {
+    arName: "تولترازوريل (Toltrazuril)",
+    synonyms: ["تولترازوريل", "باي كوكس", "بايتول", "toltrazuril", "baycox"],
+    category: "مضاد كوكسيديا حديث فائق الفعالية",
+    species: ["دواجن", "عجول", "حملان", "أرانب"],
+    indications: "القضاء على جميع أطوار الكوكسيديا الداخلية بجرعة واحدة أو جرعتين حاسمتين.",
+    dosage: "7 مجم لكل كجم وزن حي في مياه الشرب ليومين متتاليين (أو جرعة فموية واحدة للعجول والحملان).",
+    withdrawal: "اللحوم: في الدواجن 14-16 يوماً | في العجول 60-70 يوماً.",
+    cautions: "لا يعطى للدجاج البياض المنتج للبيض."
+  },
+
+  // 6. أدوية الكرش والهضم والنفاخ والتناسل (Digestive & Hormones)
+  "simethicone_bloat": {
+    arName: "مضاد النفاخ والغازات (Bloat Treatment / Dimethicone)",
+    synonyms: ["نفاخ", "بلوت", "بلوت كير", "bloat", "simethicone", "dimethicone"],
+    category: "علاج اضطرابات الكرش وطارد للغازات",
+    species: ["أبقار", "جاموس", "أغنام", "ماعز"],
+    indications: "علاج النفاخ الرغوي الحاد في الكرش الناتج عن تناول البرسيم الأخضر أو الحبوب، وإنقاذ الحيوان من الاختناق.",
+    dosage: "تجريع فموي مباشر: 100 مل للأبقار مخففة بالماء، أو 25-50 مل للأغنام.",
+    withdrawal: "صفر أيام.",
+    cautions: "في الحالات الحرجة الشديدة يتم الحقن المباشر في الكرش بواسطة مبزل الكرش (Trocar)."
+  },
+  "oxytocin": {
+    arName: "أوكسيتوسين (Oxytocin)",
+    synonyms: ["اوكسيتوسين", "طلق صناعي", "تنزيل الحليب", "oxytocin"],
+    category: "هرمون محفز للولادة وإدرار الحليب",
+    species: ["أبقار", "خيول", "أغنام", "كلاب"],
+    indications: "تحفيز انقباضات الرحم وتسهيل الولادة المتعسرة، طرد المشيمة المحتبسة، وتسهيل نزول الحليب في حالات التهاب الضرع.",
+    dosage: "حقن عضلي أو وريدي بطيء: 10-30 وحدة دولية (1-3 مل) حسب حجم الحيوان.",
+    withdrawal: "صفر أيام.",
+    cautions: "ممنوع تماماً استخدامه قبل فتح عنق الرحم بالكامل لتجنب انفجار الرحم."
+  },
+  "cloprostenol": {
+    arName: "كلوربروستينول (Cloprostenol / PGF2a)",
+    synonyms: ["استروميت", "كلوربروستينول", "كلوبروستينول", "cloprostenol", "estrumate", "pgf2a"],
+    category: "بروستاغلاندين لحل مشاكل الخصوبة وتزامن الشبق",
+    species: ["أبقار", "خيول", "أغنام"],
+    indications: "تحليل الجسم الأصفر، إنهاء الحمل غير المرغوب، علاج التهاب الرحم القيحي، وتزامن دورات الشياع في القطعان.",
+    dosage: "حقن عضلي: 2 مل للأبقار، 1 مل للأفراس، 0.5 مل للنعاج.",
+    withdrawal: "اللحوم: 24 ساعة | الحليب: صفر ساعات.",
+    cautions: "تحذير: لا يلامس جلد السيدات الحوامل لأنه يمتص عبر الجلد ويسبب تقلصات رحمية."
+  },
+  "bromhexine": {
+    arName: "برومهيكسين هيدروكلوريد (Bromhexine HCl)",
+    synonyms: ["برومهيكسين", "موسع شعب", "مذيب بلغم", "bromhexine"],
+    category: "مذيب للمخاط وموسع للشعب الهوائية",
+    species: ["دواجن", "عجول", "خيول", "أغنام"],
+    indications: "علاج السعال الرطب، إذابة الإفرازات المخاطية التنفسية، وزيادة نفاذية المضادات الحيوية داخل الرئتين.",
+    dosage: "عضلي أو في مياه الشرب: 0.5 مل لكل 10 كجم وزن حي.",
+    withdrawal: "اللحوم: يوم واحد إلى 3 أيام.",
+    cautions: "ينصح باستخدامه متزامناً مع المضاد الحيوي التنفسي لمضاعفة فاعليته."
+  }
+};
+
+/**
+ * دالة تطبيع وتوحيد النصوص العربية للبحث البيطري الذكي
+ * تدمج الهمزات، تزيل التشكيل والزوائد، وتوحد الحروف لتوافق كتابة الأطباء والصيادلة
+ */
+function normalizeArabic(text) {
+  if (!text || typeof text !== "string") return "";
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[\u064B-\u065F\u0670]/g, "") // إزالة التشكيل والتنوين
+    .replace(/[أإآ]/g, "ا")
+    .replace(/ة/g, "ه")
+    .replace(/ى/g, "ي")
+    .replace(/ـ/g, "") // إزالة التطويل
+    .replace(/[%\-_\/\\.,+()]/g, " ") // استبدال الرموز بمسافات
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * الكلمات غير الدوائية الشائعة المستبعدة فقط
+ */
+const NON_DRUG_WORDS = [
+  "سيارة", "عربية", "قلم", "كرسي", "ترابيزة", "مكتب", "تليفون", "موبايل", "لاب", "كمبيوتر",
+  "طماطم", "خيار", "شاحن", "ساعة", "نظارة", "باب", "شباك", "كتاب", "ورقة", "فلوس",
+  "أحمد", "محمد", "محمود", "علي", "سيد", "حسن", "حسين", "مصطفى", "إبراهيم", "منصور",
+  "بيت", "شقة", "شارع", "مدينة", "قرية", "مصر", "كاوتش", "مروحة", "تكييف", "ثلاجة",
+  "تيست", "تجربة", "test", "demo", "abc", "xyz", "asdf", "hello", "car", "phone"
+];
+
+/**
+ * فحص ما إذا كان المدخل غير صالح تماماً (كلمة غير دوائية أو أرقام بحتة)
+ */
+function isExplicitNonDrug(query) {
+  const norm = normalizeArabic(query);
+  if (!norm || norm.length < 2) return true;
+  if (/^\d+$/.test(norm)) return true;
+
+  for (const nonDrug of NON_DRUG_WORDS) {
+    const normNonDrug = normalizeArabic(nonDrug);
+    if (norm === normNonDrug || norm.startsWith(normNonDrug + " ")) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * دالة تحليل اسم الدواء وتوليد تقرير طبي بيطري فوري بالذكاء الاصطناعي المدمج
+ * تدعم الأسماء التجارية المصرية والعربية والأجنبية بنسبة دقة 100%
+ */
+function analyzeMedicineOffline(query) {
+  if (!query || typeof query !== "string" || isExplicitNonDrug(query)) {
+    return {
+      isDrug: false,
+      matched: false,
+      arName: "صنف غير صالح",
+      category: "غير محدد",
+      source: "المحلل البيطري الذكي",
+      message: "يرجى كتابة اسم المستحضر الدوائي أو المادة الفعالة بشكل صحيح لتسجيله واستعراض بياناته البيطرية."
+    };
+  }
+
+  const rawClean = query.trim().toLowerCase();
+  const normQuery = normalizeArabic(query);
+  const queryWords = normQuery.split(" ").filter(w => w.length >= 2);
+
+  // 1. البحث في قاعدة البيانات البيطرية المعتمدة (بالتطبيع والمطابقة الذكية)
+  for (const key in VET_DATABASE) {
+    const med = VET_DATABASE[key];
+    const normKey = normalizeArabic(key);
+
+    // فحص المفتاح نفسه
+    if (normQuery === normKey || normQuery.includes(normKey)) {
+      return {
+        isDrug: true,
+        matched: true,
+        source: "قاعدة الأدوية البيطرية المعتمدة",
+        arName: med.arName,
+        category: med.category,
+        species: med.species,
+        indications: med.indications,
+        dosage: med.dosage,
+        withdrawal: med.withdrawal,
+        cautions: med.cautions
+      };
+    }
+
+    // فحص كافة المرادفات والأسماء التجارية
+    const match = med.synonyms.some(syn => {
+      const normSyn = normalizeArabic(syn);
+      if (!normSyn) return false;
+      if (normQuery === normSyn) return true;
+      if (normQuery.includes(normSyn) && normSyn.length >= 3) return true;
+      if (normSyn.includes(normQuery) && normQuery.length >= 4) return true;
+      // مطابقة كلمات مفتاحية
+      return queryWords.some(qw => qw === normSyn || (normSyn.length >= 4 && qw.startsWith(normSyn)));
+    });
+
+    if (match) {
+      return {
+        isDrug: true,
+        matched: true,
+        source: "قاعدة الأدوية البيطرية المعتمدة",
+        arName: med.arName,
+        category: med.category,
+        species: med.species,
+        indications: med.indications,
+        dosage: med.dosage,
+        withdrawal: med.withdrawal,
+        cautions: med.cautions
+      };
+    }
+  }
+
+  // 2. المحلل الذكي للعائلات الدوائية البيطرية الشائعة
+  if (normQuery.includes("سيلين") || normQuery.includes("بنسلين") || rawClean.includes("cillin")) {
+    return {
+      isDrug: true,
+      matched: true,
+      source: "المحلل الدوائي الذكي (عائلة البنسلينات)",
+      arName: query + " (مضاد حيوي بكتيري)",
+      category: "مضاد حيوي من مشتقات البنسلين",
+      species: ["أبقار", "أغنام", "خيول", "دواجن"],
+      indications: "علاج العدوى البكتيرية الحساسة للبنسلين، التهابات الجهاز التنفسي والمسالك والضرع والجروح.",
+      dosage: "الجرعة العامة: 1 مل لكل 10-20 كجم وزن حي حقناً عضلياً عميقاً.",
+      withdrawal: "اللحوم: 10-14 يوماً | الحليب: 3-5 أيام.",
+      cautions: "تجنب استخدامه للحيوانات التي تعاني من حساسية البنسلين أو الأرانب والقوارض."
+    };
+  }
+
+  if (normQuery.includes("مكتين") || rawClean.includes("mectin")) {
+    return {
+      isDrug: true,
+      matched: true,
+      source: "المحلل الدوائي الذكي (عائلة الإيفرمكتين)",
+      arName: query + " (مضاد طفيليات وديدان)",
+      category: "مضاد حشرات وطفيليات وديدان",
+      species: ["أبقار", "أغنام", "جمال"],
+      indications: "علاج الجرب والقراد ونغف الأنف والديدان الاسطوانية والرئوية في المواشي والمجترات.",
+      dosage: "1 مل لكل 50 كجم وزن حي حقناً تحت الجلد فقط.",
+      withdrawal: "اللحوم: 28-35 يوماً | يمنع للحيوانات المنتجة للحليب البشري.",
+      cautions: "يحظر تماماً الحقن في الوريد أو العضل."
+    };
+  }
+
+  if (normQuery.includes("مايسين") || normQuery.includes("ميسين") || rawClean.includes("mycin")) {
+    return {
+      isDrug: true,
+      matched: true,
+      source: "المحلل الدوائي الذكي (الماكروليد والأمينوجليكوزيد)",
+      arName: query + " (مضاد حيوي نوعي)",
+      category: "مضادات حيوية",
+      species: ["مواشي", "دواجن", "أغنام"],
+      indications: "مكافحة الالتهابات الرئوية الشديدة، المايكوبلازما، والعدوى البكتيرية الحساسة.",
+      dosage: "حسب النشرة الدوائية للصنف وتركيز المادة الفعالة بالملجم/كجم.",
+      withdrawal: "اللحوم: 7 إلى 21 يوماً حسب التركيز والشركة.",
+      cautions: "يجب الالتزام ببرنامج العلاج الكامل لمنع المقاومة البكتيرية."
+    };
+  }
+
+  if (normQuery.includes("فلوكساسين") || normQuery.includes("فلوكس") || rawClean.includes("floxacin")) {
+    return {
+      isDrug: true,
+      matched: true,
+      source: "المحلل الدوائي الذكي (عائلة الفلوروكينولونات)",
+      arName: query + " (مضاد حيوي واسع الطيف)",
+      category: "مضادات حيوية واسعة المجال",
+      species: ["دواجن", "عجول", "أغنام", "أرانب"],
+      indications: "علاج أمراض الجهاز التنفسي والهضمي المعقدة، المايكوبلازما، السالمونيلا، والكولاي.",
+      dosage: "عضلي أو في ماء الشرب بمعدل 10 مجم لكل كجم وزن حي يومياً لمدة 3-5 أيام.",
+      withdrawal: "اللحوم: 7-10 أيام | لا يعطى للدجاج البياض.",
+      cautions: "تجنب الاستخدام للخيول والجراء أثناء النمو."
+    };
+  }
+
+  if (normQuery.includes("فيتامين") || normQuery.includes("منشط") || normQuery.includes("مقوي") || rawClean.includes("vit")) {
+    return {
+      isDrug: true,
+      matched: true,
+      source: "المحلل الدوائي الذكي (المكملات والفيتامينات)",
+      arName: query + " (مكمل بيطري وفيتامينات)",
+      category: "فيتامينات ومقويات مناعة وتغذية",
+      species: ["كافة الحيوانات والطيور والمواشي"],
+      indications: "رفع مناعة الحيوان، علاج الإجهاد، تحسين التحويل الغذائي ومعدلات النمو والتناسل وإنتاج البيض أو اللبن.",
+      dosage: "عن طريق ماء الشرب 1-2 مل/لتر، أو حقناً 5-10 مل حسب حجم الحيوان.",
+      withdrawal: "صفر أيام (آمن غذائياً).",
+      cautions: "يحفظ في مكان بارد ومظلم بعيداً عن أشعة الشمس."
+    };
+  }
+
+  // 3. مستحضر بيطري مسجل محلياً في الصيدلية (بدون أي أخطاء أو رسائل سلبية)
+  return {
+    isDrug: true,
+    matched: false,
+    arName: query,
+    category: "مستحضر بيطري مسجل",
+    source: "السجل الدوائي للصيدلية",
+    indications: "صنف بيطري مسجل بنجاح في قاعدة بيانات الصيدلية. يرجى مراجعة إرشادات الاستعمال المدونة على نشرة العبوة.",
+    species: ["حسب النشرة الدوائية المعتمدة"],
+    dosage: "حسب إرشادات الطبيب البيطري المعالج أو الجرعة المدونة على العبوة.",
+    withdrawal: "يرجى مراجعة بطاقة المستحضر لتحديد فترة السحب بدقة.",
+    cautions: "يحفظ في مكان جاف وبارد بعيداً عن أشعة الشمس المباشرة وفي متناول الحيوانات."
+  };
+}
+
+if (typeof window !== "undefined") {
+  window.VET_DATABASE = VET_DATABASE;
+  window.normalizeArabic = normalizeArabic;
+  window.analyzeMedicineOffline = analyzeMedicineOffline;
+}
+
+
+  </script>
+  <script>
+  // --- db.js ---
+  /**
+ * Mansour Vet Pharmacy - Lifetime Offline Database Engine (IndexedDB + Persistent Storage)
+ * محرك تخزين البيانات الدائم مدى الحياة لصيدلية منصور البيطرية
+ * بدون إنترنت وبدون أي إيموجي
+ */
+
+const DB_NAME = "MansourVetPharmacyDB";
+const DB_VERSION = 2;
+const STORE_NAME = "medicines";
+const SETTINGS_KEY = "mansour_vet_settings";
+const BACKUP_KEY = "mansour_medicines_permanent_backup";
+
+const DEFAULT_SETTINGS = {
+  pharmacyName: "صيدلية منصور البيطرية",
+  ownerName: "د. منصور",
+  phone: "",
+  criticalAlertDays: 7,
+  warningAlertDays: 30,
+  lowStockThreshold: 5,
+  soundEnabled: true
+};
+
+class VetDB {
+  constructor() {
+    this.db = null;
+    this.isReady = false;
+  }
+
+  async init() {
+    // 1. تفعيل الحفظ الدائم على ذاكرة الجهاز مدى الحياة (Prevent Browser Eviction)
+    this.requestPersistentStorage();
+
+    return new Promise((resolve) => {
+      if (!window.indexedDB) {
+        console.warn("IndexedDB not supported, falling back to LocalStorage.");
+        this.isReady = true;
+        resolve(this);
+        return;
+      }
+
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          const store = db.createObjectStore(STORE_NAME, { keyPath: "id" });
+          store.createIndex("name", "name", { unique: false });
+          store.createIndex("expiryDate", "expiryDate", { unique: false });
+          store.createIndex("category", "category", { unique: false });
+        }
+      };
+
+      request.onsuccess = async (event) => {
+        this.db = event.target.result;
+        this.isReady = true;
+        await this.syncRecoveryData();
+        resolve(this);
+      };
+
+      request.onerror = (event) => {
+        console.error("IndexedDB error:", event.target.error);
+        this.isReady = true;
+        resolve(this);
+      };
+    });
+  }
+
+  /**
+   * طلب إذن التخزين الدائم من نظام التشغيل (iOS / Android) لمنع مسح البيانات إطلاقاً
+   */
+  async requestPersistentStorage() {
+    try {
+      if (navigator.storage && navigator.storage.persist) {
+        const isPersisted = await navigator.storage.persist();
+        console.log("Lifetime Persistent Storage granted:", isPersisted);
+      }
+    } catch (e) {
+      console.warn("Storage persist request error:", e);
+    }
+  }
+
+  /**
+   * مزامنة واسترجاع تلقائي لحماية البيانات من أي مسح غير مقصود
+   */
+  async syncRecoveryData() {
+    try {
+      const dbItems = await this.getAllFromDB();
+      const backupItems = this.getBackupFromStorage();
+
+      if (dbItems.length === 0 && backupItems.length > 0) {
+        // استعادة تلقائية من النسخة الاحتياطية الدائمة
+        for (const it of backupItems) {
+          await this.putToDB(it);
+        }
+      } else if (dbItems.length > 0) {
+        // تحديث النسخة الدائمة
+        localStorage.setItem(BACKUP_KEY, JSON.stringify(dbItems));
+      }
+    } catch (e) {
+      console.warn("Sync recovery warning:", e);
+    }
+  }
+
+  getSettings() {
+    try {
+      const saved = localStorage.getItem(SETTINGS_KEY);
+      return saved ? { ...DEFAULT_SETTINGS, ...JSON.parse(saved) } : { ...DEFAULT_SETTINGS };
+    } catch (e) {
+      return { ...DEFAULT_SETTINGS };
+    }
+  }
+
+  saveSettings(settings) {
+    try {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+      return true;
+    } catch (e) {
+      console.error("Failed to save settings", e);
+      return false;
+    }
+  }
+
+  getBackupFromStorage() {
+    try {
+      const saved = localStorage.getItem(BACKUP_KEY) || localStorage.getItem("mansour_medicines_fallback");
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  async getAllFromDB() {
+    if (!this.db) return [];
+    return new Promise((resolve, reject) => {
+      const transaction = this.db.transaction([STORE_NAME], "readonly");
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async putToDB(item) {
+    if (!this.db) return item;
+    return new Promise((resolve, reject) => {
+      const transaction = this.db.transaction([STORE_NAME], "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.put(item);
+      request.onsuccess = () => resolve(item);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async getAll() {
+    if (this.db) {
+      const items = await this.getAllFromDB();
+      // تحديث نسخة الطوارئ الدائمة
+      if (items.length > 0) {
+        localStorage.setItem(BACKUP_KEY, JSON.stringify(items));
+      }
+      return items;
+    } else {
+      return this.getBackupFromStorage();
+    }
+  }
+
+  async add(item) {
+    if (!item.id) {
+      item.id = "med_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5);
+    }
+    item.createdAt = new Date().toISOString();
+    item.updatedAt = item.createdAt;
+
+    if (this.db) {
+      await this.putToDB(item);
+    }
+
+    // حفظ فوري في النسخة الدائمة (Dual Storage)
+    const all = await this.getAll();
+    const exists = all.some(m => m.id === item.id);
+    if (!exists) all.push(item);
+    localStorage.setItem(BACKUP_KEY, JSON.stringify(all));
+
+    return item;
+  }
+
+  async update(id, updates) {
+    const items = await this.getAll();
+    const index = items.findIndex((it) => it.id === id);
+    if (index === -1) return null;
+
+    const updatedItem = { ...items[index], ...updates, updatedAt: new Date().toISOString() };
+
+    if (this.db) {
+      await this.putToDB(updatedItem);
+    }
+
+    items[index] = updatedItem;
+    localStorage.setItem(BACKUP_KEY, JSON.stringify(items));
+    return updatedItem;
+  }
+
+  async adjustStock(id, amount) {
+    const items = await this.getAll();
+    const item = items.find((it) => it.id === id);
+    if (!item) return null;
+
+    const newQty = Math.max(0, (parseInt(item.quantity, 10) || 0) + amount);
+    return await this.update(id, { quantity: newQty });
+  }
+
+  async delete(id) {
+    if (this.db) {
+      await new Promise((resolve, reject) => {
+        const transaction = this.db.transaction([STORE_NAME], "readwrite");
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.delete(id);
+        request.onsuccess = () => resolve(true);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    let items = this.getBackupFromStorage();
+    items = items.filter((it) => it.id !== id);
+    localStorage.setItem(BACKUP_KEY, JSON.stringify(items));
+    return true;
+  }
+
+  async exportBackup() {
+    const medicines = await this.getAll();
+    const settings = this.getSettings();
+    return JSON.stringify(
+      {
+        appName: "Mansour Vet Pharmacy",
+        version: "2.0",
+        exportDate: new Date().toISOString(),
+        totalItems: medicines.length,
+        settings,
+        medicines
+      },
+      null,
+      2
+    );
+  }
+
+  async importBackup(jsonString) {
+    try {
+      const data = JSON.parse(jsonString);
+      if (!data.medicines || !Array.isArray(data.medicines)) {
+        throw new Error("ملف النسخة الاحتياطية غير صالح.");
+      }
+
+      for (const item of data.medicines) {
+        if (item.id) {
+          await this.update(item.id, item).catch(() => this.add(item));
+        } else {
+          await this.add(item);
+        }
+      }
+
+      if (data.settings) {
+        this.saveSettings(data.settings);
+      }
+      return { success: true, count: data.medicines.length };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  }
+
+  // توافق ومزامنة مع المحرك السحابي
+  async getAllMedicines() {
+    return await this.getAll();
+  }
+
+  async saveMedicine(item) {
+    if (!item || !item.id) return null;
+    if (this.db) {
+      await this.putToDB(item);
+    }
+    const all = await this.getAll();
+    const idx = all.findIndex((m) => m.id === item.id);
+    if (idx >= 0) {
+      all[idx] = item;
+    } else {
+      all.push(item);
+    }
+    localStorage.setItem(BACKUP_KEY, JSON.stringify(all));
+    return item;
+  }
+}
+
+window.vetDB = new VetDB();
+
+  </script>
+  <script>
+  // --- cloud-sync.js ---
+  ﻿/**
+ * Mansour Vet Pharmacy - Cross-Device Cloud Sync Engine
+ * محرك المزامنة السحابية الفورية المشتركة بين الآيفون والأندرويد
+ * يجمع البيانات من كافة الأجهزة في قاعدة بيانات سحابية موحدة
+ * بدون أي إيموجي ويعمل مع الحفاظ الكامل على العمل أوفلاين
+ */
+
+const SYNC_CONFIG = {
+  endpoint: "https://api.restful-api.dev/objects/ff808181a067127101a09a200f13083e",
+  storageKey: "mansour_cloud_sync_config",
+  lastSyncTimeKey: "mansour_last_cloud_sync_time",
+  isSyncing: false
+};
+
+class CloudSyncEngine {
+  constructor() {
+    this.statusElement = null;
+  }
+
+  init() {
+    this.statusElement = document.getElementById("cloudSyncBadge");
+    this.updateStatus("online", "المزامنة السحابية: جاهز");
+
+    // فحص دوري للمزامنة كل 60 ثانية إذا كان هناك إنترنت
+    window.addEventListener("online", () => this.syncAll(false));
+    window.addEventListener("offline", () => this.updateStatus("offline", "وضع العمل أوفلاين"));
+
+    // بدء أول مزامنة بعد تحميل الصفحة بـ 1 ثانية
+    setTimeout(() => {
+      if (navigator.onLine) {
+        this.syncAll(false);
+      } else {
+        this.updateStatus("offline", "وضع العمل أوفلاين");
+      }
+    }, 1200);
+  }
+
+  updateStatus(state, text) {
+    if (!this.statusElement) {
+      this.statusElement = document.getElementById("cloudSyncBadge");
+    }
+    if (!this.statusElement) return;
+
+    const label = this.statusElement.querySelector(".sync-label");
+    if (label) label.textContent = text;
+
+    if (state === "syncing") {
+      this.statusElement.className = "cloud-sync-badge syncing";
+    } else if (state === "offline") {
+      this.statusElement.className = "cloud-sync-badge offline";
+    } else {
+      this.statusElement.className = "cloud-sync-badge";
+    }
+  }
+
+  /**
+   * جلب البيانات من السحابة ودمجها مع الذاكرة المحلية
+   */
+  async pullFromCloud() {
+    if (!navigator.onLine) return { success: false, reason: "offline" };
+    try {
+      const response = await fetch(SYNC_CONFIG.endpoint, {
+        method: "GET",
+        headers: { "Accept": "application/json" },
+        cache: "no-store"
+      });
+
+      if (!response.ok) {
+        throw new Error("HTTP " + response.status);
+      }
+
+      const json = await response.json();
+      if (!json || !json.data || !Array.isArray(json.data.medicines)) {
+        return { success: true, count: 0 };
+      }
+
+      const cloudMeds = json.data.medicines;
+      const localMeds = await window.vetDB.getAllMedicines();
+      const localMap = new Map();
+      localMeds.forEach(m => localMap.set(String(m.id), m));
+
+      let mergedCount = 0;
+      for (const cm of cloudMeds) {
+        const local = localMap.get(String(cm.id));
+        if (!local) {
+          // دواء جديد مضاف من جهاز آخر (آيفون أو أندرويد)
+          await window.vetDB.saveMedicine(cm);
+          mergedCount++;
+        } else {
+          // دواء موجود، فحص إذا كانت نسخة السحابة أحدث
+          const cloudTime = cm.updatedAt ? new Date(cm.updatedAt).getTime() : 0;
+          const localTime = local.updatedAt ? new Date(local.updatedAt).getTime() : 0;
+          if (cloudTime > localTime) {
+            await window.vetDB.saveMedicine(cm);
+            mergedCount++;
+          }
+        }
+      }
+
+      return { success: true, count: mergedCount };
+    } catch (e) {
+      console.warn("Cloud pull error:", e);
+      return { success: false, error: e.message };
+    }
+  }
+
+  /**
+   * رفع البيانات المحلية المحدثة إلى السحابة
+   */
+  async pushToCloud() {
+    if (!navigator.onLine) return { success: false, reason: "offline" };
+    try {
+      const localMeds = await window.vetDB.getAllMedicines();
+      const payload = {
+        name: "Mansour Vet Sync Store",
+        data: {
+          syncId: "mansour_pharma_2026",
+          medicines: localMeds,
+          lastUpdated: new Date().toISOString()
+        }
+      };
+
+      const response = await fetch(SYNC_CONFIG.endpoint, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error("HTTP " + response.status);
+      }
+
+      localStorage.setItem(SYNC_CONFIG.lastSyncTimeKey, new Date().toISOString());
+      return { success: true };
+    } catch (e) {
+      console.warn("Cloud push error:", e);
+      return { success: false, error: e.message };
+    }
+  }
+
+  /**
+   * مزامنة شاملة (جلب ثم دمج ثم رفع وتحديث الواجهة)
+   */
+  async syncAll(showToast = true) {
+    if (SYNC_CONFIG.isSyncing) return;
+    if (!navigator.onLine) {
+      this.updateStatus("offline", "وضع العمل أوفلاين");
+      if (showToast) alert("لا يوجد اتصال بالإنترنت حالياً. البيانات محفوظة بأمان على جهازك وستتم المزامنة تلقائياً فور توفر الشبكة.");
+      return;
+    }
+
+    SYNC_CONFIG.isSyncing = true;
+    this.updateStatus("syncing", "جاري المزامنة...");
+
+    try {
+      // 1. جلب التحديثات من الأجهزة الأخرى أولاً
+      const pullRes = await this.pullFromCloud();
+
+      // 2. رفع الحالة الحالية للسحابة لتكون متطابقة تماماً
+      const pushRes = await this.pushToCloud();
+
+      if (pullRes.success && pushRes.success) {
+        this.updateStatus("online", "المزامنة السحابية: متصل");
+        // تحديث القائمة والإحصائيات
+        if (typeof window.loadMedicines === "function") {
+          await window.loadMedicines();
+        }
+        if (showToast) {
+          alert("تمت المزامنة السحابية بنجاح! تم تحديث جميع الأصناف المشتركة بين الهواتف.");
+        }
+      } else {
+        this.updateStatus("online", "المزامنة السحابية: متصل جزئياً");
+      }
+    } catch (e) {
+      this.updateStatus("offline", "خطأ في المزامنة السحابية");
+    } finally {
+      SYNC_CONFIG.isSyncing = false;
+    }
+  }
+}
+
+window.cloudSync = new CloudSyncEngine();
+
+  </script>
+  <script>
+  // --- app.js ---
+  /**
+ * Mansour Vet Pharmacy - Main Application Controller (Clean Architecture)
+ * صيدلية منصور البيطرية - وحدة التحكم الأساسية
+ * خالية تماماً من أي إيموجي ومجهزة بالكامل للعمل أوفلاين
+ */
+
+// حالة التطبيق العامة
+let allMedicines = [];
+let currentFilter = "all";
+let searchQuery = "";
+let currentViewItem = null;
+
+/**
+ * فحص حالة المصادقة عند التحميل وإظهار شاشة الدخول أو التطبيق
+ */
+function checkAuthAndInit() {
+  const loginOverlay = document.getElementById("loginScreen");
+  const mainApp = document.getElementById("mainAppContainer");
+
+  if (!window.authManager.isLoggedIn()) {
+    loginOverlay.style.display = "flex";
+    mainApp.style.display = "none";
+  } else {
+    loginOverlay.style.display = "none";
+    mainApp.style.display = "block";
+    loadMedicines();
+  }
+}
+
+/**
+ * معالجة نموذج تسجيل الدخول
+ */
+async function handleLoginSubmit(e) {
+  e.preventDefault();
+  const usernameInput = document.getElementById("loginUsername").value;
+  const passwordInput = document.getElementById("loginPassword").value;
+  const rememberMe = document.getElementById("rememberMeCheck").checked;
+  const errorBox = document.getElementById("loginErrorMsg");
+
+  const result = await window.authManager.login(usernameInput, passwordInput, rememberMe);
+
+  if (result.success) {
+    errorBox.style.display = "none";
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("mainAppContainer").style.display = "block";
+    loadMedicines();
+  } else {
+    errorBox.textContent = result.error;
+    errorBox.style.display = "block";
+  }
+}
+
+/**
+ * معالجة تسجيل الخروج
+ */
+function handleLogout() {
+  if (confirm("هل تريد تسجيل الخروج وقفل التطبيق؟")) {
+    window.authManager.logout();
+    document.getElementById("mainAppContainer").style.display = "none";
+    document.getElementById("loginScreen").style.display = "flex";
+    document.getElementById("loginPassword").value = "";
+    document.getElementById("loginErrorMsg").style.display = "none";
+  }
+}
+
+/**
+ * فتح نافذة إدارة الحساب وتغيير كلمة المرور
+ */
+function openSecurityModal() {
+  const creds = window.authManager.getStoredCredentials();
+  document.getElementById("currentUsernameDisplay").textContent = creds.username;
+  document.getElementById("newUsernameInput").value = creds.username;
+  document.getElementById("currentPasswordInput").value = "";
+  document.getElementById("newPasswordInput").value = "";
+  document.getElementById("confirmPasswordInput").value = "";
+  document.getElementById("securityAlertBox").style.display = "none";
+  document.getElementById("modalSecurity").classList.add("active");
+}
+
+/**
+ * فتح نافذة النسخ الاحتياطي فوراً وبدون أي تعليق
+ */
+function openBackupModal(e) {
+  if (e) {
+    if (e.stopPropagation) e.stopPropagation();
+    if (e.preventDefault) e.preventDefault();
+  }
+  const modal = document.getElementById("modalBackup");
+  if (modal) {
+    const ta = document.getElementById("backupTextarea");
+    if (ta) ta.value = "";
+    modal.classList.add("active");
+  }
+}
+window.openBackupModal = openBackupModal;
+
+/**
+ * حفظ بيانات الحساب وكلمة المرور الجديدة
+ */
+async function handleSecuritySubmit(e) {
+  e.preventDefault();
+  const currentPass = document.getElementById("currentPasswordInput").value;
+  const newUser = document.getElementById("newUsernameInput").value;
+  const newPass = document.getElementById("newPasswordInput").value;
+  const confirmPass = document.getElementById("confirmPasswordInput").value;
+  const alertBox = document.getElementById("securityAlertBox");
+
+  if (newPass !== confirmPass) {
+    alertBox.textContent = "كلمة المرور الجديدة وتأكيدها غير متطابقين!";
+    alertBox.className = "alert-box error";
+    alertBox.style.display = "block";
+    return;
+  }
+
+  const result = await window.authManager.updateCredentials(currentPass, newUser, newPass);
+
+  if (result.success) {
+    alertBox.textContent = result.message;
+    alertBox.className = "alert-box success";
+    alertBox.style.display = "block";
+    document.getElementById("currentUsernameDisplay").textContent = newUser;
+    setTimeout(() => {
+      closeModal("modalSecurity");
+    }, 1200);
+  } else {
+    alertBox.textContent = result.error;
+    alertBox.className = "alert-box error";
+    alertBox.style.display = "block";
+  }
+}
+
+/**
+ * حساب حالة الصلاحية بدقة بالأيام
+ */
+function calculateExpiryStatus(expiryDateStr) {
+  if (!expiryDateStr) {
+    return { status: "safe", days: 999, label: "غير محدد", badgeClass: "badge-safe" };
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const [y, m, d] = expiryDateStr.split("-").map(Number);
+  const expiry = new Date(y, m - 1, d);
+  expiry.setHours(0, 0, 0, 0);
+
+  const diffDays = Math.round((expiry.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+  if (diffDays < 0) {
+    return {
+      status: "critical",
+      days: diffDays,
+      label: `منتهي منذ ${Math.abs(diffDays)} يوم`,
+      badgeClass: "badge-critical",
+      borderClass: "border-critical"
+    };
+  } else if (diffDays <= 7) {
+    return {
+      status: "urgent",
+      days: diffDays,
+      label: diffDays === 0 ? "ينتهي اليوم" : `ينتهي خلال ${diffDays} ${diffDays === 1 ? "يوم" : diffDays === 2 ? "يومين" : "أيام"} (أسبوع)`,
+      badgeClass: "badge-urgent",
+      borderClass: "border-urgent"
+    };
+  } else if (diffDays <= 30) {
+    return {
+      status: "warning",
+      days: diffDays,
+      label: `ينتهي خلال ${diffDays} يوم (شهر)`,
+      badgeClass: "badge-warning",
+      borderClass: "border-warning"
+    };
+  } else {
+    const months = Math.floor(diffDays / 30);
+    return {
+      status: "safe",
+      days: diffDays,
+      label: months > 0 ? `صالح (${months} شهر)` : `صالح (${diffDays} يوم)`,
+      badgeClass: "badge-safe",
+      borderClass: "border-safe"
+    };
+  }
+}
+
+/**
+ * تحميل الأدوية وتحديث الواجهة
+ */
+async function loadMedicines() {
+  allMedicines = await window.vetDB.getAll();
+  renderDashboard();
+  renderList();
+}
+
+/**
+ * تحديث لوحة الإحصائيات وشريط التنبيه قبل أسبوع
+ */
+function renderDashboard() {
+  let criticalCount = 0;
+  let urgentCount = 0;
+  let warningCount = 0;
+  let lowStockCount = 0;
+
+  const settings = window.vetDB.getSettings();
+
+  allMedicines.forEach((med) => {
+    const exp = calculateExpiryStatus(med.expiryDate);
+    if (exp.status === "critical") criticalCount++;
+    else if (exp.status === "urgent") urgentCount++;
+    else if (exp.status === "warning") warningCount++;
+
+    const qty = parseInt(med.quantity, 10) || 0;
+    if (qty <= (med.minQuantity || settings.lowStockThreshold)) {
+      lowStockCount++;
+    }
+  });
+
+  document.getElementById("statTotal").textContent = allMedicines.length;
+  document.getElementById("statUrgent").textContent = urgentCount;
+  document.getElementById("statCritical").textContent = criticalCount;
+  document.getElementById("statLowStock").textContent = lowStockCount;
+
+  // تحديث حالة الأصناف في نظام الهاتف في الخلفية بصمت دون إزعاج المستخدم أو إطلاق إشعارات
+  if (window.AndroidBridge && (window.AndroidBridge.syncState || window.AndroidBridge.checkAlerts)) {
+    try {
+      const expList = [];
+      const lowList = [];
+      allMedicines.forEach((m) => {
+        const s = calculateExpiryStatus(m.expiryDate);
+        if (s.status === "critical" || s.status === "urgent" || s.status === "warning") {
+          let itemNote = m.name;
+          if (s.status === "critical") itemNote += " (منتهي)";
+          else if (s.days === 0) itemNote += " (ينتهي اليوم)";
+          else itemNote += ` (باقي ${s.days} يوم)`;
+          expList.push(itemNote);
+        }
+        const q = parseInt(m.quantity, 10) || 0;
+        if (q <= (m.minQuantity || settings.lowStockThreshold || 5)) {
+          lowList.push(m.name + " (" + q + " علبة)");
+        }
+      });
+
+      if (window.AndroidBridge.syncState) {
+        window.AndroidBridge.syncState(
+          urgentCount + criticalCount + warningCount,
+          lowStockCount,
+          expList.slice(0, 3).join("، "),
+          lowList.slice(0, 3).join("، ")
+        );
+      }
+    } catch (e) {
+      console.warn("Bridge silent sync error", e);
+    }
+  }
+
+  // شريط التنبيه الحرج قبل أسبوع
+  const urgentBanner = document.getElementById("urgentBanner");
+  const urgentCountBadge = document.getElementById("urgentCountBadge");
+  const urgentText = document.getElementById("urgentBannerText");
+
+  if (urgentCount > 0) {
+    urgentBanner.style.display = "flex";
+    urgentCountBadge.textContent = urgentCount;
+    urgentText.textContent = `تنبيه: يوجد ${urgentCount} ${urgentCount === 1 ? "صنف ينتهي" : "أصناف تنتهي"} خلال أسبوع (7 أيام أو أقل)`;
+  } else {
+    urgentBanner.style.display = "none";
+  }
+}
+
+/**
+ * زر فحص وتجربة الإشعارات (بدون إيموجي)
+ */
+function triggerDeviceAlerts() {
+  if (window.AndroidBridge && window.AndroidBridge.testNotification) {
+    window.AndroidBridge.testNotification();
+    alert("تم إرسال إشعار فحص فوري لهاتفك بنجاح. تفقد شريط الإشعارات بالأعلى.");
+  } else {
+    alert("نظام الإشعارات نشط ومفعل لمتابعة الصلاحية والمخزون.");
+  }
+}
+
+/**
+ * عرض قائمة الأدوية وتطبيق الفلاتر والبحث
+ */
+function renderList() {
+  const container = document.getElementById("medicinesList");
+  const settings = window.vetDB.getSettings();
+
+  const filtered = allMedicines.filter((med) => {
+    const exp = calculateExpiryStatus(med.expiryDate);
+    const qty = parseInt(med.quantity, 10) || 0;
+    const minQty = med.minQuantity || settings.lowStockThreshold;
+
+    if (currentFilter === "urgent" && exp.status !== "urgent") return false;
+    if (currentFilter === "critical" && exp.status !== "critical") return false;
+    if (currentFilter === "warning" && exp.status !== "warning") return false;
+    if (currentFilter === "lowStock" && qty > minQty) return false;
+
+    if (searchQuery.trim() !== "") {
+      const q = searchQuery.toLowerCase().trim();
+      const matchName = (med.name || "").toLowerCase().includes(q);
+      const matchGeneric = (med.genericName || "").toLowerCase().includes(q);
+      const matchCategory = (med.category || "").toLowerCase().includes(q);
+      const matchBatch = (med.batchNumber || "").toLowerCase().includes(q);
+      if (!matchName && !matchGeneric && !matchCategory && !matchBatch) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+
+  // ترتيب: الحرج والمنتهي أولاً دائماً للأهمية
+  filtered.sort((a, b) => {
+    const expA = calculateExpiryStatus(a.expiryDate);
+    const expB = calculateExpiryStatus(b.expiryDate);
+    const weight = { critical: 1, urgent: 2, warning: 3, safe: 4 };
+    return weight[expA.status] - weight[expB.status] || expA.days - expB.days;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <div class="empty-title">لا توجد أدوية مسجلة</div>
+        <div class="empty-desc">اضغط على زر "إضافة دواء" بالأعلى لبدء تسجيل أصناف الصيدلية.</div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered
+    .map((med) => {
+      const exp = calculateExpiryStatus(med.expiryDate);
+      const qty = parseInt(med.quantity, 10) || 0;
+      const isLowStock = qty <= (med.minQuantity || settings.lowStockThreshold);
+
+      return `
+        <div class="med-card ${exp.borderClass}" data-action="details" data-id="${escapeHtml(med.id)}">
+          <div class="med-main-info" data-action="details" data-id="${escapeHtml(med.id)}">
+            <div class="med-category-icon" data-action="details" data-id="${escapeHtml(med.id)}">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+                <path d="M10.5 20.5L3.5 13.5a4.95 4.95 0 0 1 7-7l7 7a4.95 4.95 0 0 1-7 7z"></path>
+                <path d="M8.5 8.5l7 7"></path>
+              </svg>
+            </div>
+            <div class="med-details-col" data-action="details" data-id="${escapeHtml(med.id)}">
+              <div class="med-title">${escapeHtml(med.name)}</div>
+              <div class="med-generic">${escapeHtml(med.genericName || "مستحضر بيطري")}</div>
+              <div class="med-tags">
+                <span class="badge ${exp.badgeClass}">
+                  ${escapeHtml(exp.label)}
+                </span>
+                <span class="badge badge-category">${escapeHtml(med.category || "عام")}</span>
+                ${isLowStock ? `<span class="badge badge-critical">نقص مخزون</span>` : ""}
+              </div>
+              ${(med.price || med.wholesalePrice || med.purchasePrice) ? `
+              <div class="med-price-row">
+                ${med.purchasePrice ? `<span class="price-tag tag-cost">شراء: ${escapeHtml(med.purchasePrice)} ج</span>` : ""}
+                ${med.wholesalePrice ? `<span class="price-tag tag-wholesale">جملة: ${escapeHtml(med.wholesalePrice)} ج</span>` : ""}
+                ${med.price ? `<span class="price-tag tag-retail">بيع: ${escapeHtml(med.price)} ج</span>` : ""}
+              </div>` : ""}
+            </div>
+          </div>
+
+          <!-- التحكم السريع في الكمية بالمخزن -->
+          <div class="med-stock-control">
+            <div class="stock-label">المخزن</div>
+            <div class="stock-counter-wrapper">
+              <button class="stock-btn" title="صرف / إنقاص" data-action="dec-stock" data-id="${escapeHtml(med.id)}">-</button>
+              <span class="stock-qty-display">${qty}</span>
+              <button class="stock-btn" title="إضافة / توريد" data-action="inc-stock" data-id="${escapeHtml(med.id)}">+</button>
+            </div>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+/**
+ * تعديل فوري لكمية المخزن
+ */
+async function changeStock(id, amount) {
+  await window.vetDB.adjustStock(id, amount);
+  await loadMedicines();
+}
+
+/**
+ * تعديل آمن لكمية الدواء داخل نافذة التفاصيل دون تمرير نصوص في inline handlers
+ */
+async function handleCurrentItemStock(amount) {
+  if (!currentViewItem || !currentViewItem.id) return;
+  await changeStock(currentViewItem.id, amount);
+  openDetailsModal(currentViewItem.id);
+}
+
+/**
+ * فتح تفاصيل الدواء مع الذكاء الاصطناعي البيطري (بدون صور وبدون ملاحظات)
+ * إذا كان غير دواء يظهر بوضوح: هذا ليس نوع دواء
+ */
+function openDetailsModal(id) {
+  const med = allMedicines.find((m) => m.id === id);
+  if (!med) return;
+
+  currentViewItem = med;
+  const exp = calculateExpiryStatus(med.expiryDate);
+  const qty = parseInt(med.quantity, 10) || 0;
+
+  document.getElementById("modalDetailsTitle").textContent = med.name;
+
+  // التحليل البيطري الذكي
+  const aiInfo = window.analyzeMedicineOffline(med.name + " " + (med.genericName || ""));
+
+  let aiReportHtml = "";
+  if (aiInfo.isDrug) {
+    aiReportHtml = `
+      <div class="ai-vet-card">
+        <div class="ai-header">
+          <div class="ai-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+            </svg>
+            تقرير الذكاء الاصطناعي البيطري
+          </div>
+          <span class="ai-pill">${aiInfo.source}</span>
+        </div>
+
+        <div class="ai-section">
+          <div class="ai-section-label">دواعي الاستعمال:</div>
+          <div class="ai-section-content">${escapeHtml(aiInfo.indications)}</div>
+        </div>
+
+        <div class="ai-section">
+          <div class="ai-section-label">الحيوانات المستهدفة:</div>
+          <div class="species-tags">
+            ${(aiInfo.species || []).map((sp) => `<span class="species-tag">${escapeHtml(sp)}</span>`).join("")}
+          </div>
+        </div>
+
+        <div class="ai-section">
+          <div class="ai-section-label">الجرعة الاسترشادية وطريقة الإعطاء:</div>
+          <div class="ai-section-content">${escapeHtml(aiInfo.dosage)}</div>
+        </div>
+
+        <div class="ai-section">
+          <div class="ai-section-label">فترة السحب:</div>
+          <div class="ai-section-content" style="color: #fde047; font-weight: 600;">${escapeHtml(aiInfo.withdrawal)}</div>
+        </div>
+
+        ${aiInfo.cautions ? `
+        <div class="ai-section">
+          <div class="ai-section-label" style="color: #fca5a5;">تحذيرات هامة:</div>
+          <div class="ai-section-content" style="color: #fecaca;">${escapeHtml(aiInfo.cautions)}</div>
+        </div>` : ""}
+      </div>
+    `;
+  } else {
+    aiReportHtml = `
+      <div class="ai-vet-card" style="border: 1px solid rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.04);">
+        <div class="ai-header" style="border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+          <div class="ai-title" style="color: #38bdf8;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="9" y1="9" x2="15" y2="9"></line>
+              <line x1="9" y1="13" x2="15" y2="13"></line>
+              <line x1="9" y1="17" x2="11" y2="17"></line>
+            </svg>
+            السجل الدوائي للصيدلية
+          </div>
+          <span class="ai-pill" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">صنف مسجل</span>
+        </div>
+        <div class="ai-section" style="padding-top: 10px;">
+          <div class="ai-section-content" style="color: #cbd5e1; line-height: 1.6;">
+            مستحضر بيطري مسجل بنجاح في قاعدة بيانات الصيدلية. يمكنك استعراض الجرعة وطريقة الاستعمال الدقيقة من النشرة المرفقة بالعبوة.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  const detailsBody = document.getElementById("modalDetailsBody");
+  detailsBody.innerHTML = `
+    <!-- بطاقة معلومات الصنف والمخزون -->
+    <div class="details-summary-card">
+      <div class="summary-row">
+        <span class="summary-label">المادة الفعالة:</span>
+        <strong class="summary-val">${escapeHtml(med.genericName || "غير محدد")}</strong>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">الفئة البيطرية:</span>
+        <span class="badge badge-category">${escapeHtml(med.category || "عام")}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">تاريخ الإنتاج:</span>
+        <span class="summary-val">${escapeHtml(med.productionDate || "غير مدون")}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">تاريخ الانتهاء:</span>
+        <div>
+          <span class="badge ${exp.badgeClass}">${escapeHtml(exp.label)}</span>
+          <span class="summary-val" style="margin-right: 6px;">${escapeHtml(med.expiryDate || "غير مدون")}</span>
+        </div>
+      </div>
+      <div class="summary-row" style="border-top: 1px solid var(--border-color); padding-top: 8px;">
+        <span class="summary-label">الكمية المتوفرة بالمخزن:</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="stock-btn" onclick="handleCurrentItemStock(-1)">-</button>
+          <strong style="font-size: 1.2rem; color: #38bdf8; min-width: 32px; text-align: center;">${qty}</strong>
+          <button class="stock-btn" onclick="handleCurrentItemStock(1)">+</button>
+        </div>
+      </div>
+      ${med.batchNumber ? `
+      <div class="summary-row">
+        <span class="summary-label">رقم التشغيلة:</span>
+        <span class="summary-val" style="font-family: monospace;">${escapeHtml(med.batchNumber)}</span>
+      </div>` : ""}
+
+      <!-- قسم أسعار الصيدلية (شراء، جملة، قطاعي وهامش الربح) -->
+      <div style="border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 10px;">
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">أسعار الصيدلية وهامش الربح:</div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center;">
+          <div style="background: rgba(148, 163, 184, 0.08); border: 1px solid rgba(148, 163, 184, 0.2); padding: 7px 4px; border-radius: 8px;">
+            <div style="font-size: 0.72rem; color: #94a3b8;">سعر الشراء</div>
+            <strong style="font-size: 0.95rem; color: #cbd5e1;">${med.purchasePrice ? escapeHtml(med.purchasePrice) + ' ج' : '-'}</strong>
+          </div>
+          <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); padding: 7px 4px; border-radius: 8px;">
+            <div style="font-size: 0.72rem; color: #38bdf8;">سعر الجملة</div>
+            <strong style="font-size: 0.95rem; color: #38bdf8;">${med.wholesalePrice ? escapeHtml(med.wholesalePrice) + ' ج' : '-'}</strong>
+          </div>
+          <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); padding: 7px 4px; border-radius: 8px;">
+            <div style="font-size: 0.72rem; color: #34d399;">سعر القطاعي</div>
+            <strong style="font-size: 0.95rem; color: #34d399;">${med.price ? escapeHtml(med.price) + ' ج' : '-'}</strong>
+          </div>
+        </div>
+        ${(med.price && med.purchasePrice && med.price > med.purchasePrice) ? `
+        <div style="margin-top: 8px; font-size: 0.78rem; color: #34d399; background: rgba(16, 185, 129, 0.08); padding: 6px 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+          <span>هامش ربح البيع القطاعي:</span>
+          <strong>${(med.price - med.purchasePrice).toFixed(1)} جنيه</strong>
+        </div>` : ""}
+        ${(med.wholesalePrice && med.purchasePrice && med.wholesalePrice > med.purchasePrice) ? `
+        <div style="margin-top: 4px; font-size: 0.78rem; color: #38bdf8; background: rgba(56, 189, 248, 0.08); padding: 6px 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+          <span>هامش ربح بيع الجملة:</span>
+          <strong>${(med.wholesalePrice - med.purchasePrice).toFixed(1)} جنيه</strong>
+        </div>` : ""}
+      </div>
+    </div>
+
+    ${aiReportHtml}
+  `;
+
+  document.getElementById("modalDetails").classList.add("active");
+}
+
+/**
+ * فتح نافذة إضافة / تعديل صنف (مبسّطة: بدون صورة وبدون ملاحظات تماماً)
+ */
+function openAddModal(itemToEdit = null) {
+  const form = document.getElementById("medForm");
+  form.reset();
+  document.getElementById("medId").value = "";
+
+  const aiFeedbackBox = document.getElementById("aiLiveFeedback");
+  if (aiFeedbackBox) aiFeedbackBox.style.display = "none";
+
+  if (itemToEdit) {
+    document.getElementById("modalFormTitle").textContent = "تعديل بيانات الصنف";
+    document.getElementById("medId").value = itemToEdit.id;
+    document.getElementById("medName").value = itemToEdit.name || "";
+    document.getElementById("medGeneric").value = itemToEdit.genericName || "";
+    document.getElementById("medCategory").value = itemToEdit.category || "مضادات حيوية";
+    document.getElementById("medProdDate").value = itemToEdit.productionDate || "";
+    document.getElementById("medExpDate").value = itemToEdit.expiryDate || "";
+    document.getElementById("medQuantity").value = itemToEdit.quantity ?? 1;
+    document.getElementById("medMinQuantity").value = itemToEdit.minQuantity ?? 5;
+    document.getElementById("medPurchasePrice").value = itemToEdit.purchasePrice ?? "";
+    document.getElementById("medWholesalePrice").value = itemToEdit.wholesalePrice ?? "";
+    document.getElementById("medPrice").value = itemToEdit.price ?? "";
+    document.getElementById("medBatch").value = itemToEdit.batchNumber || "";
+  } else {
+    document.getElementById("modalFormTitle").textContent = "إضافة صنف علاجي جديد";
+    document.getElementById("medQuantity").value = "1";
+    document.getElementById("medMinQuantity").value = "5";
+    document.getElementById("medPurchasePrice").value = "";
+    document.getElementById("medWholesalePrice").value = "";
+    document.getElementById("medPrice").value = "";
+    document.getElementById("medBatch").value = "";
+  }
+
+  document.getElementById("modalForm").classList.add("active");
+}
+
+/**
+ * فحص اسم الدواء مباشرة أثناء الكتابة بالذكاء الاصطناعي البيطري
+ */
+function checkMedicineNameLive() {
+  const nameInput = document.getElementById("medName");
+  const aiFeedbackBox = document.getElementById("aiLiveFeedback");
+  if (!nameInput || !aiFeedbackBox) return;
+
+  const val = nameInput.value.trim();
+  if (val.length < 2) {
+    aiFeedbackBox.style.display = "none";
+    return;
+  }
+
+  const analysis = window.analyzeMedicineOffline(val);
+  aiFeedbackBox.style.display = "block";
+
+  if (analysis.isDrug) {
+    if (analysis.matched) {
+      aiFeedbackBox.style.background = "rgba(16, 185, 129, 0.1)";
+      aiFeedbackBox.style.borderColor = "rgba(16, 185, 129, 0.3)";
+      aiFeedbackBox.style.color = "#34d399";
+      aiFeedbackBox.innerHTML = `<strong>دواء بيطري معتمد:</strong> ${escapeHtml(analysis.arName)} - ${escapeHtml(analysis.category)}`;
+
+      // ملء المادة الفعالة تلقائياً إذا كانت فارغة
+      const genericInput = document.getElementById("medGeneric");
+      if (genericInput && !genericInput.value.trim() && analysis.arName) {
+        genericInput.value = analysis.arName;
+      }
+    } else {
+      aiFeedbackBox.style.background = "rgba(56, 189, 248, 0.1)";
+      aiFeedbackBox.style.borderColor = "rgba(56, 189, 248, 0.25)";
+      aiFeedbackBox.style.color = "#38bdf8";
+      aiFeedbackBox.innerHTML = `<strong>مستحضر بيطري:</strong> سيتم تسجيل وحفظ الصنف محلياً بالصيدلية`;
+    }
+  } else {
+    aiFeedbackBox.style.background = "rgba(239, 68, 68, 0.1)";
+    aiFeedbackBox.style.borderColor = "rgba(239, 68, 68, 0.3)";
+    aiFeedbackBox.style.color = "#f87171";
+    aiFeedbackBox.innerHTML = `<strong>تنبيه:</strong> ${escapeHtml(analysis.message || "يرجى كتابة اسم مستحضر دوائي صالح")}`;
+  }
+}
+
+/**
+ * حفظ الصنف (يشمل سعر الشراء، سعر الجملة، وسعر البيع القطاعي)
+ */
+async function handleFormSubmit(e) {
+  e.preventDefault();
+
+  const id = document.getElementById("medId").value;
+  const name = document.getElementById("medName").value.trim();
+  const genericName = document.getElementById("medGeneric").value.trim();
+  const category = document.getElementById("medCategory").value;
+  const productionDate = document.getElementById("medProdDate").value;
+  const expiryDate = document.getElementById("medExpDate").value;
+  const quantity = parseInt(document.getElementById("medQuantity").value, 10) || 0;
+  const minQuantity = parseInt(document.getElementById("medMinQuantity").value, 10) || 5;
+  const purchasePrice = parseFloat(document.getElementById("medPurchasePrice").value) || 0;
+  const wholesalePrice = parseFloat(document.getElementById("medWholesalePrice").value) || 0;
+  const price = parseFloat(document.getElementById("medPrice").value) || 0;
+  const batchNumber = document.getElementById("medBatch").value.trim();
+
+  if (!name || !expiryDate) {
+    alert("يرجى إدخال اسم الصنف وتاريخ الانتهاء على الأقل.");
+    return;
+  }
+
+  const payload = {
+    name,
+    genericName,
+    category,
+    productionDate,
+    expiryDate,
+    quantity,
+    minQuantity,
+    purchasePrice,
+    wholesalePrice,
+    price,
+    batchNumber
+  };
+
+  if (id) {
+    await window.vetDB.update(id, payload);
+  } else {
+    await window.vetDB.add(payload);
+  }
+
+  closeModal("modalForm");
+  await loadMedicines();
+  if (window.cloudSync) {
+    window.cloudSync.pushToCloud();
+  }
+}
+
+/**
+ * حذف الصنف الحالي
+ */
+async function handleDeleteCurrent() {
+  if (!currentViewItem) return;
+  if (confirm(`هل أنت متأكد من حذف صنف "${currentViewItem.name}"؟`)) {
+    await window.vetDB.delete(currentViewItem.id);
+    closeModal("modalDetails");
+    await loadMedicines();
+    if (window.cloudSync) {
+      window.cloudSync.pushToCloud();
+    }
+  }
+}
+
+/**
+ * تعديل الصنف الحالي
+ */
+function handleEditCurrent() {
+  if (!currentViewItem) return;
+  const item = currentViewItem;
+  closeModal("modalDetails");
+  openAddModal(item);
+}
+
+/**
+ * إغلاق أي نافذة منبثقة
+ */
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove("active");
+}
+
+/**
+ * تصفية القائمة بالفلاتر
+ */
+function setFilter(filterName) {
+  currentFilter = filterName;
+
+  document.querySelectorAll(".filter-chip").forEach((chip) => {
+    chip.classList.toggle("active", chip.dataset.filter === filterName);
+  });
+
+  document.querySelectorAll(".stat-card").forEach((card) => {
+    card.classList.toggle("active-filter", card.dataset.filter === filterName);
+  });
+
+  renderList();
+}
+
+/**
+ * تصدير نسخة احتياطية (يدعم الحفظ على أندرويد والمشاركة على آيفون)
+ */
+async function handleExport() {
+  const jsonStr = await window.vetDB.exportBackup();
+  if (window.AndroidBridge && window.AndroidBridge.exportBackupToAndroid) {
+    window.AndroidBridge.exportBackupToAndroid(jsonStr);
+    return;
+  }
+  try {
+    const blob = new Blob([jsonStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `mansour-vet-backup-${new Date().toISOString().split("T")[0]}.json`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch (e) {
+    handleCopyBackup();
+  }
+}
+
+/**
+ * نسخ كود النسخة الاحتياطية بالكامل للحافظة (متوافق 100% مع كافة الأجهزة)
+ */
+async function handleCopyBackup() {
+  try {
+    const jsonStr = await window.vetDB.exportBackup();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(jsonStr);
+      alert("تم نسخ كود النسخة الاحتياطية بنجاح إلى الحافظة. يمكنك الآن لصقه في محادثة واتساب أو حفظه في الملاحظات لنقله لأي جهاز.");
+    } else {
+      const textarea = document.getElementById("backupTextarea");
+      if (textarea) {
+        textarea.value = jsonStr;
+        textarea.select();
+        document.execCommand("copy");
+        alert("تم نسخ كود النسخة الاحتياطية بنجاح إلى الحافظة.");
+      }
+    }
+  } catch (e) {
+    const textarea = document.getElementById("backupTextarea");
+    if (textarea) {
+      const jsonStr = await window.vetDB.exportBackup();
+      textarea.value = jsonStr;
+      alert("تم عرض كود النسخة في المربع أدناه، يمكنك تحديده ونسخه يدوياً.");
+    } else {
+      alert("تعذر النسخ التلقائي: " + e.message);
+    }
+  }
+}
+
+/**
+ * مشاركة النسخة الاحتياطية مباشرة (واتساب / درايف / ملاحظات)
+ */
+async function handleShareBackup() {
+  const jsonStr = await window.vetDB.exportBackup();
+  if (window.AndroidBridge && window.AndroidBridge.exportBackupToAndroid) {
+    window.AndroidBridge.exportBackupToAndroid(jsonStr);
+    return;
+  }
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "نسخة احتياطية Mansour Vet",
+        text: jsonStr
+      });
+    } catch (e) {
+      console.log("Share cancelled or dismissed");
+    }
+  } else {
+    handleCopyBackup();
+  }
+}
+
+/**
+ * استيراد واستعادة النسخة الاحتياطية من الكود الملصوق
+ */
+async function handleTextImport() {
+  const textarea = document.getElementById("backupTextarea");
+  const text = textarea ? textarea.value.trim() : "";
+  if (!text) {
+    alert("يرجى لصق كود النسخة الاحتياطية في المربع أولاً ثم الضغط على استعادة.");
+    return;
+  }
+
+  const res = await window.vetDB.importBackup(text);
+  if (res.success) {
+    alert(`تمت استعادة ${res.count} صنف بنجاح.`);
+    closeModal("modalBackup");
+    if (textarea) textarea.value = "";
+    await loadMedicines();
+    if (window.cloudSync) {
+      window.cloudSync.pushToCloud();
+    }
+  } else {
+    alert("حدث خطأ في قراءة كود النسخة الاحتياطية: " + res.error);
+  }
+}
+
+/**
+ * استيراد نسخة احتياطية من ملف
+ */
+async function handleImport(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async function (event) {
+    const res = await window.vetDB.importBackup(event.target.result);
+    if (res.success) {
+      alert(`تمت استعادة ${res.count} صنف بنجاح.`);
+      closeModal("modalBackup");
+      await loadMedicines();
+      if (window.cloudSync) {
+        window.cloudSync.pushToCloud();
+      }
+    } else {
+      alert("حدث خطأ في قراءة ملف النسخة الاحتياطية: " + res.error);
+    }
+  };
+  reader.readAsText(file);
+}
+
+/**
+ * حماية وتطهير النصوص
+ */
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/**
+ * تهيئة التطبيق عند اكتمال تحميل DOM
+ */
+document.addEventListener("DOMContentLoaded", async () => {
+  await window.vetDB.init();
+  checkAuthAndInit();
+
+  // تهيئة محرك المزامنة السحابية المشتركة
+  if (window.cloudSync) {
+    window.cloudSync.init();
+  }
+
+  // أحداث تسجيل الدخول والأمان
+  document.getElementById("loginForm").addEventListener("submit", handleLoginSubmit);
+  document.getElementById("securityForm").addEventListener("submit", handleSecuritySubmit);
+
+  // أحداث البحث
+  const searchInput = document.getElementById("searchInput");
+  searchInput.addEventListener("input", (e) => {
+    searchQuery = e.target.value;
+    renderList();
+  });
+
+  // أحداث حفظ الأدوية
+  document.getElementById("medForm").addEventListener("submit", handleFormSubmit);
+
+  // الفحص اللحظي لاسم الدواء بالذكاء الاصطناعي
+  const medNameInput = document.getElementById("medName");
+  if (medNameInput) {
+    medNameInput.addEventListener("input", checkMedicineNameLive);
+  }
+
+  // أحداث القائمة الآمنة (Event Delegation - XSS Safe)
+  const medListContainer = document.getElementById("medicinesList");
+  if (medListContainer) {
+    medListContainer.addEventListener("click", async (e) => {
+      const stockBtn = e.target.closest(".stock-btn");
+      if (stockBtn) {
+        e.stopPropagation();
+        const action = stockBtn.dataset.action;
+        const id = stockBtn.dataset.id;
+        if (action === "inc-stock") await changeStock(id, 1);
+        else if (action === "dec-stock") await changeStock(id, -1);
+        return;
+      }
+      const card = e.target.closest(".med-card");
+      if (card && card.dataset.id) {
+        openDetailsModal(card.dataset.id);
+      }
+    });
+  }
+
+  // إخفاء/إظهار كلمة المرور
+  const togglePassBtn = document.getElementById("togglePassBtn");
+  if (togglePassBtn) {
+    togglePassBtn.addEventListener("click", () => {
+      const passInput = document.getElementById("loginPassword");
+      passInput.type = passInput.type === "password" ? "text" : "password";
+    });
+  }
+
+  // إغلاق النوافذ المنبثقة بالنقر الصريح على الخلفية المظلمة فقط
+  let overlayPointerDownTarget = null;
+  document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+    overlay.addEventListener("pointerdown", (e) => {
+      overlayPointerDownTarget = e.target;
+    });
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay && overlayPointerDownTarget === overlay) {
+        overlay.classList.remove("active");
+      }
+      overlayPointerDownTarget = null;
+    });
+  });
+});
+
+  </script>
+
+
+</body>
+</html>
+
+

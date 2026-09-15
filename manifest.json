@@ -1,0 +1,38 @@
+{
+  "name": "Mansour - منصور للأدوية البيطرية",
+  "short_name": "Mansour",
+  "description": "تطبيق إدارة الأدوية وتنبيهات انتهاء الصلاحية والمخزون والتحليل البيطري الذكي بدون إنترنت",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#0f766e",
+  "orientation": "portrait",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/logo.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/favicon.svg",
+      "sizes": "48x48 96x96",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["medical", "business", "productivity"]
+}
