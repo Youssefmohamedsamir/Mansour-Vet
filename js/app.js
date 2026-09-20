@@ -416,11 +416,15 @@ function openDetailsModal(id) {
 
   document.getElementById("modalDetailsTitle").textContent = med.name;
 
-  // التحليل البيطري الذكي
+  // التحليل البيطري الذكي (فوائد الدواء، بيعالج إيه، والجرعات فقط)
   const aiInfo = window.analyzeMedicineOffline(med.name + " " + (med.genericName || ""));
 
   let aiReportHtml = "";
   if (aiInfo.isDrug) {
+    const benefitsText = aiInfo.category ? `${aiInfo.arName}، مصنف كـ (${aiInfo.category})، يوفر فاعلية وحماية علاجية بيطرية متخصصة.` : `${aiInfo.arName} مستحضر علاجي بيطري متكامل.`;
+    const treatsText = aiInfo.indications || "علاج الحالات المرضية والأعراض المصرح بها وفق النشرة الدوائية المعتمدة.";
+    const dosageText = aiInfo.dosage || "حسب الجرعة المقررة من الطبيب البيطري المعالج أو النشرة المرفقة بالعبوة.";
+
     aiReportHtml = `
       <div class="ai-vet-card">
         <div class="ai-header">
@@ -428,59 +432,61 @@ function openDetailsModal(id) {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
             </svg>
-            تقرير الذكاء الاصطناعي البيطري
+            التحليل الدوائي الذكي
           </div>
           <span class="ai-pill">${aiInfo.source}</span>
         </div>
 
+        <!-- 1. فوائد اسم الدواء -->
         <div class="ai-section">
-          <div class="ai-section-label">دواعي الاستعمال:</div>
-          <div class="ai-section-content">${escapeHtml(aiInfo.indications)}</div>
+          <div class="ai-section-label">فوائد اسم الدواء:</div>
+          <div class="ai-section-content">${escapeHtml(benefitsText)}</div>
         </div>
 
+        <!-- 2. بيعالج إيه (دواعي الاستعمال) -->
         <div class="ai-section">
-          <div class="ai-section-label">الحيوانات المستهدفة:</div>
-          <div class="species-tags">
-            ${(aiInfo.species || []).map((sp) => `<span class="species-tag">${escapeHtml(sp)}</span>`).join("")}
-          </div>
+          <div class="ai-section-label">بيعالج إيه (دواعي الاستعمال):</div>
+          <div class="ai-section-content">${escapeHtml(treatsText)}</div>
         </div>
 
+        <!-- 3. الجرعات وطريقة الاستخدام -->
         <div class="ai-section">
-          <div class="ai-section-label">الجرعة الاسترشادية وطريقة الإعطاء:</div>
-          <div class="ai-section-content">${escapeHtml(aiInfo.dosage)}</div>
+          <div class="ai-section-label">الجرعات وطريقة الاستخدام:</div>
+          <div class="ai-section-content" style="color: #86efac; font-weight: 700;">${escapeHtml(dosageText)}</div>
         </div>
-
-        <div class="ai-section">
-          <div class="ai-section-label">فترة السحب:</div>
-          <div class="ai-section-content" style="color: #fde047; font-weight: 600;">${escapeHtml(aiInfo.withdrawal)}</div>
-        </div>
-
-        ${aiInfo.cautions ? `
-        <div class="ai-section">
-          <div class="ai-section-label" style="color: #fca5a5;">تحذيرات هامة:</div>
-          <div class="ai-section-content" style="color: #fecaca;">${escapeHtml(aiInfo.cautions)}</div>
-        </div>` : ""}
       </div>
     `;
   } else {
     aiReportHtml = `
-      <div class="ai-vet-card" style="border: 1px solid rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.04);">
-        <div class="ai-header" style="border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-          <div class="ai-title" style="color: #38bdf8;">
+      <div class="ai-vet-card">
+        <div class="ai-header">
+          <div class="ai-title">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
               <line x1="9" y1="9" x2="15" y2="9"></line>
               <line x1="9" y1="13" x2="15" y2="13"></line>
-              <line x1="9" y1="17" x2="11" y2="17"></line>
             </svg>
             السجل الدوائي للصيدلية
           </div>
-          <span class="ai-pill" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">صنف مسجل</span>
+          <span class="ai-pill">صنف مسجل</span>
         </div>
-        <div class="ai-section" style="padding-top: 10px;">
-          <div class="ai-section-content" style="color: #cbd5e1; line-height: 1.6;">
-            مستحضر بيطري مسجل بنجاح في قاعدة بيانات الصيدلية. يمكنك استعراض الجرعة وطريقة الاستعمال الدقيقة من النشرة المرفقة بالعبوة.
-          </div>
+
+        <!-- 1. فوائد اسم الدواء -->
+        <div class="ai-section">
+          <div class="ai-section-label">فوائد اسم الدواء:</div>
+          <div class="ai-section-content">مستحضر بيطري مسجل ومتابع في قاعدة بيانات صيدلية منصور للرعاية الصحية.</div>
+        </div>
+
+        <!-- 2. بيعالج إيه (دواعي الاستعمال) -->
+        <div class="ai-section">
+          <div class="ai-section-label">بيعالج إيه (دواعي الاستعمال):</div>
+          <div class="ai-section-content">علاج الحالات والأعراض الموضحة على عبوة المستحضر ونشرته الداخلية.</div>
+        </div>
+
+        <!-- 3. الجرعات وطريقة الاستخدام -->
+        <div class="ai-section">
+          <div class="ai-section-label">الجرعات وطريقة الاستخدام:</div>
+          <div class="ai-section-content" style="color: #86efac; font-weight: 700;">حسب تعليمات الطبيب البيطري المعالج أو النشرة المرفقة بالعبوة.</div>
         </div>
       </div>
     `;
@@ -619,7 +625,11 @@ function checkMedicineNameLive() {
       aiFeedbackBox.style.background = "rgba(16, 185, 129, 0.1)";
       aiFeedbackBox.style.borderColor = "rgba(16, 185, 129, 0.3)";
       aiFeedbackBox.style.color = "#34d399";
-      aiFeedbackBox.innerHTML = `<strong>دواء بيطري معتمد:</strong> ${escapeHtml(analysis.arName)} - ${escapeHtml(analysis.category)}`;
+      aiFeedbackBox.innerHTML = `
+        <div style="font-weight: 800; margin-bottom: 3px;">فوائد الدواء: ${escapeHtml(analysis.arName)} (${escapeHtml(analysis.category)})</div>
+        <div style="font-size: 0.76rem; color: #cbd5e1; margin-bottom: 2px;"><strong>بيعالج إيه:</strong> ${escapeHtml(analysis.indications)}</div>
+        <div style="font-size: 0.76rem; color: #86efac;"><strong>الجرعات:</strong> ${escapeHtml(analysis.dosage)}</div>
+      `;
 
       // ملء المادة الفعالة تلقائياً إذا كانت فارغة
       const genericInput = document.getElementById("medGeneric");
@@ -630,7 +640,7 @@ function checkMedicineNameLive() {
       aiFeedbackBox.style.background = "rgba(56, 189, 248, 0.1)";
       aiFeedbackBox.style.borderColor = "rgba(56, 189, 248, 0.25)";
       aiFeedbackBox.style.color = "#38bdf8";
-      aiFeedbackBox.innerHTML = `<strong>مستحضر بيطري:</strong> سيتم تسجيل وحفظ الصنف محلياً بالصيدلية`;
+      aiFeedbackBox.innerHTML = `<strong>مستحضر بيطري مسجل:</strong> صنف جديد سيتم حفظه وإدارته بالصيدلية`;
     }
   } else {
     aiFeedbackBox.style.background = "rgba(239, 68, 68, 0.1)";
