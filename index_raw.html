@@ -75,12 +75,15 @@
   <!-- 2. واجهة التطبيق الرئيسية (Main Mobile App Container) -->
   <div class="app-container" id="mainAppContainer" style="display: none;">
 
-    <!-- شريط الرأس الطبي الفاخر المتناسق -->
+    <!-- شريط الرأس الطبي الفاخر المتناسق V2 -->
     <header class="app-header">
       <div class="brand-wrapper">
         <img src="icons/icon-512.png" alt="شعار Mansour" class="app-logo">
         <div class="brand-text-col">
-          <h1 class="brand-title">Mansour</h1>
+          <div class="brand-title-row">
+            <h1 class="brand-title">Mansour</h1>
+            <span class="v2-badge">V2.0</span>
+          </div>
           <span class="brand-subtitle">منصور للأدوية البيطرية</span>
         </div>
       </div>
@@ -127,22 +130,34 @@
       <button class="alert-action-btn" onclick="setFilter('urgent')">عرض الأصناف</button>
     </div>
 
-    <!-- لوحة المؤشرات السريعة -->
+    <!-- لوحة المؤشرات السريعة الذكية V2 -->
     <div class="stats-grid">
       <div class="stat-card" data-filter="all" onclick="setFilter('all')">
-        <div class="stat-title">إجمالي الأصناف</div>
+        <div class="stat-header">
+          <span class="stat-title">إجمالي الأصناف</span>
+          <span class="stat-dot dot-all"></span>
+        </div>
         <div class="stat-value" id="statTotal">0</div>
       </div>
       <div class="stat-card urgent" data-filter="urgent" onclick="setFilter('urgent')">
-        <div class="stat-title">ينتهي خلال أسبوع</div>
+        <div class="stat-header">
+          <span class="stat-title">ينتهي خلال أسبوع</span>
+          <span class="stat-dot dot-urgent"></span>
+        </div>
         <div class="stat-value" id="statUrgent">0</div>
       </div>
       <div class="stat-card critical" data-filter="critical" onclick="setFilter('critical')">
-        <div class="stat-title">منتهي الصلاحية</div>
+        <div class="stat-header">
+          <span class="stat-title">منتهي الصلاحية</span>
+          <span class="stat-dot dot-critical"></span>
+        </div>
         <div class="stat-value" id="statCritical">0</div>
       </div>
-      <div class="stat-card" data-filter="lowStock" onclick="setFilter('lowStock')">
-        <div class="stat-title">مخزون منخفض</div>
+      <div class="stat-card lowStock" data-filter="lowStock" onclick="setFilter('lowStock')">
+        <div class="stat-header">
+          <span class="stat-title">مخزون منخفض</span>
+          <span class="stat-dot dot-lowStock"></span>
+        </div>
         <div class="stat-value" id="statLowStock">0</div>
       </div>
     </div>

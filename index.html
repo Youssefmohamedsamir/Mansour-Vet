@@ -414,6 +414,12 @@ textarea.form-input {
   min-width: 0;
 }
 
+.brand-title-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
 .brand-title {
   font-size: 1.05rem;
   font-weight: 800;
@@ -421,6 +427,17 @@ textarea.form-input {
   white-space: nowrap;
   letter-spacing: -0.3px;
   line-height: 1.2;
+}
+
+.v2-badge {
+  font-size: 0.62rem;
+  font-weight: 900;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(5, 150, 105, 0.35) 100%);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  letter-spacing: 0.5px;
 }
 
 .brand-subtitle {
@@ -567,15 +584,34 @@ textarea.form-input {
 
 .stat-card.active-filter {
   border-color: #10b981;
-  background: rgba(16, 185, 129, 0.1);
+  background: rgba(16, 185, 129, 0.12);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
+}
+
+.stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
 }
 
 .stat-title {
   font-size: 0.8rem;
   font-weight: 700;
   color: #94a3b8;
-  margin-bottom: 4px;
 }
+
+.stat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.stat-dot.dot-all { background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.6); }
+.stat-dot.dot-urgent { background: #f97316; box-shadow: 0 0 8px rgba(249, 115, 22, 0.6); }
+.stat-dot.dot-critical { background: #ef4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+.stat-dot.dot-lowStock { background: #38bdf8; box-shadow: 0 0 8px rgba(56, 189, 248, 0.6); }
 
 .stat-value {
   font-size: 1.55rem;
@@ -696,23 +732,27 @@ textarea.form-input {
 .medicines-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .med-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 12px;
+  background: linear-gradient(135deg, rgba(14, 23, 38, 0.95) 0%, rgba(10, 16, 28, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 13px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.1s, border-color 0.15s, box-shadow 0.15s;
 }
 
 .med-card:active {
-  background: var(--bg-card-hover);
+  transform: scale(0.985);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .med-card.border-critical { border-right: 4px solid #ef4444; }
@@ -729,11 +769,11 @@ textarea.form-input {
 }
 
 .med-category-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-sm);
-  background: #0a1f22;
-  border: 1px solid #134e4a;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.22);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -743,117 +783,143 @@ textarea.form-input {
 .med-details-col {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   min-width: 0;
+  flex: 1;
+}
+
+.med-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .med-title {
   font-size: 0.98rem;
   font-weight: 800;
-  color: #fff;
+  color: #ffffff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.med-generic {
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.med-tags {
+.med-sub-row {
   display: flex;
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
-  margin-top: 2px;
+}
+
+.med-generic {
+  font-size: 0.76rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+  margin-left: 4px;
 }
 
 .badge {
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
 }
 
 .badge-critical {
-  background: var(--status-critical-bg);
-  color: var(--status-critical-text);
-  border: 1px solid var(--status-critical-border);
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.35);
 }
 
 .badge-urgent {
-  background: var(--status-urgent-bg);
-  color: var(--status-urgent-text);
-  border: 1px solid var(--status-urgent-border);
+  background: rgba(249, 115, 22, 0.15);
+  color: #fdba74;
+  border: 1px solid rgba(249, 115, 22, 0.35);
 }
 
 .badge-warning {
-  background: var(--status-warning-bg);
-  color: var(--status-warning-text);
-  border: 1px solid var(--status-warning-border);
+  background: rgba(234, 179, 8, 0.15);
+  color: #fde047;
+  border: 1px solid rgba(234, 179, 8, 0.35);
 }
 
 .badge-safe {
-  background: var(--status-safe-bg);
-  color: var(--status-safe-text);
-  border: 1px solid var(--status-safe-border);
+  background: rgba(16, 185, 129, 0.15);
+  color: #86efac;
+  border: 1px solid rgba(16, 185, 129, 0.35);
 }
 
 .badge-category {
-  background: #18263e;
+  background: rgba(30, 41, 59, 0.8);
   color: #93c5fd;
-  border: 1px solid #2563eb33;
+  border: 1px solid rgba(59, 130, 246, 0.25);
 }
 
-/* Pricing tags on medicine card */
+/* Pricing tags on medicine card V2 */
 .med-price-row {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   flex-wrap: wrap;
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
 .price-tag {
   font-size: 0.72rem;
   font-weight: 700;
-  padding: 1px 6px;
-  border-radius: 4px;
+  padding: 2px 7px;
+  border-radius: 6px;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+.price-lbl {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  font-weight: 700;
+  margin-left: 3px;
 }
 
 .price-tag.tag-cost {
-  background: rgba(148, 163, 184, 0.1);
-  color: #94a3b8;
-  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(148, 163, 184, 0.08);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.22);
 }
 
 .price-tag.tag-wholesale {
-  background: rgba(56, 189, 248, 0.1);
+  background: rgba(56, 189, 248, 0.08);
   color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  border: 1px solid rgba(56, 189, 248, 0.22);
 }
 
 .price-tag.tag-retail {
-  background: rgba(16, 185, 129, 0.12);
+  background: rgba(16, 185, 129, 0.1);
   color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.28);
 }
 
-/* Stock Control (+ and -) */
+/* Stock Control (+ and -) V2 */
 .med-stock-control {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   padding-right: 10px;
 }
 
@@ -861,43 +927,59 @@ textarea.form-input {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: var(--bg-main);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 2px;
+  background: rgba(5, 10, 18, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 2px 4px;
 }
 
 .stock-btn {
-  background: #1e2d48;
   border: none;
-  color: #fff;
   width: 26px;
   height: 26px;
-  border-radius: 4px;
+  border-radius: 7px;
   font-weight: 900;
   font-size: 1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.1s, background 0.15s;
+}
+
+.stock-btn.dec-btn {
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.stock-btn.inc-btn {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
 .stock-btn:active {
-  background: var(--brand-primary);
-  color: #042017;
+  transform: scale(0.9);
 }
 
 .stock-qty-display {
   font-size: 0.95rem;
   font-weight: 900;
-  color: #fff;
-  min-width: 28px;
+  color: #ffffff;
+  min-width: 26px;
   text-align: center;
 }
 
+.stock-qty-display.qty-low {
+  color: #f87171;
+  font-weight: 900;
+}
+
 .stock-label {
-  font-size: 0.68rem;
-  color: var(--text-muted);
+  font-size: 0.65rem;
+  color: #64748b;
+  font-weight: 700;
 }
 
 /* Empty State */
@@ -1212,22 +1294,25 @@ textarea.form-input {
   color: #86efac;
 }
 
-/* Bottom Navigation (Native App Bar) */
+/* Bottom Navigation (Floating Dock V2) */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(10, 16, 28, 0.96);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  bottom: max(calc(env(safe-area-inset-bottom, 0px) + 8px), 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 520px;
+  background: rgba(12, 19, 34, 0.94);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 6px 8px max(calc(env(safe-area-inset-bottom, 0px) + 6px), 8px) 8px;
+  padding: 6px 10px;
   z-index: 999;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.2) inset;
 }
 
 .nav-item {
@@ -1318,12 +1403,15 @@ textarea.form-input {
   <!-- 2. واجهة التطبيق الرئيسية (Main Mobile App Container) -->
   <div class="app-container" id="mainAppContainer" style="display: none;">
 
-    <!-- شريط الرأس الطبي الفاخر المتناسق -->
+    <!-- شريط الرأس الطبي الفاخر المتناسق V2 -->
     <header class="app-header">
       <div class="brand-wrapper">
         <img src="icons/icon-512.png" alt="شعار Mansour" class="app-logo">
         <div class="brand-text-col">
-          <h1 class="brand-title">Mansour</h1>
+          <div class="brand-title-row">
+            <h1 class="brand-title">Mansour</h1>
+            <span class="v2-badge">V2.0</span>
+          </div>
           <span class="brand-subtitle">منصور للأدوية البيطرية</span>
         </div>
       </div>
@@ -1370,22 +1458,34 @@ textarea.form-input {
       <button class="alert-action-btn" onclick="setFilter('urgent')">عرض الأصناف</button>
     </div>
 
-    <!-- لوحة المؤشرات السريعة -->
+    <!-- لوحة المؤشرات السريعة الذكية V2 -->
     <div class="stats-grid">
       <div class="stat-card" data-filter="all" onclick="setFilter('all')">
-        <div class="stat-title">إجمالي الأصناف</div>
+        <div class="stat-header">
+          <span class="stat-title">إجمالي الأصناف</span>
+          <span class="stat-dot dot-all"></span>
+        </div>
         <div class="stat-value" id="statTotal">0</div>
       </div>
       <div class="stat-card urgent" data-filter="urgent" onclick="setFilter('urgent')">
-        <div class="stat-title">ينتهي خلال أسبوع</div>
+        <div class="stat-header">
+          <span class="stat-title">ينتهي خلال أسبوع</span>
+          <span class="stat-dot dot-urgent"></span>
+        </div>
         <div class="stat-value" id="statUrgent">0</div>
       </div>
       <div class="stat-card critical" data-filter="critical" onclick="setFilter('critical')">
-        <div class="stat-title">منتهي الصلاحية</div>
+        <div class="stat-header">
+          <span class="stat-title">منتهي الصلاحية</span>
+          <span class="stat-dot dot-critical"></span>
+        </div>
         <div class="stat-value" id="statCritical">0</div>
       </div>
-      <div class="stat-card" data-filter="lowStock" onclick="setFilter('lowStock')">
-        <div class="stat-title">مخزون منخفض</div>
+      <div class="stat-card lowStock" data-filter="lowStock" onclick="setFilter('lowStock')">
+        <div class="stat-header">
+          <span class="stat-title">مخزون منخفض</span>
+          <span class="stat-dot dot-lowStock"></span>
+        </div>
         <div class="stat-value" id="statLowStock">0</div>
       </div>
     </div>
@@ -3423,37 +3523,40 @@ function renderList() {
         <div class="med-card ${exp.borderClass}" data-action="details" data-id="${escapeHtml(med.id)}">
           <div class="med-main-info" data-action="details" data-id="${escapeHtml(med.id)}">
             <div class="med-category-icon" data-action="details" data-id="${escapeHtml(med.id)}">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
                 <path d="M10.5 20.5L3.5 13.5a4.95 4.95 0 0 1 7-7l7 7a4.95 4.95 0 0 1-7 7z"></path>
                 <path d="M8.5 8.5l7 7"></path>
               </svg>
             </div>
             <div class="med-details-col" data-action="details" data-id="${escapeHtml(med.id)}">
-              <div class="med-title">${escapeHtml(med.name)}</div>
-              <div class="med-generic">${escapeHtml(med.genericName || "مستحضر بيطري")}</div>
-              <div class="med-tags">
+              <div class="med-header-row">
+                <div class="med-title">${escapeHtml(med.name)}</div>
                 <span class="badge ${exp.badgeClass}">
+                  <span class="badge-dot"></span>
                   ${escapeHtml(exp.label)}
                 </span>
+              </div>
+              <div class="med-sub-row">
+                <span class="med-generic">${escapeHtml(med.genericName || "مستحضر بيطري")}</span>
                 <span class="badge badge-category">${escapeHtml(med.category || "عام")}</span>
                 ${isLowStock ? `<span class="badge badge-critical">نقص مخزون</span>` : ""}
               </div>
               ${(med.price || med.wholesalePrice || med.purchasePrice) ? `
               <div class="med-price-row">
-                ${med.purchasePrice ? `<span class="price-tag tag-cost">شراء: ${escapeHtml(med.purchasePrice)} ج</span>` : ""}
-                ${med.wholesalePrice ? `<span class="price-tag tag-wholesale">جملة: ${escapeHtml(med.wholesalePrice)} ج</span>` : ""}
-                ${med.price ? `<span class="price-tag tag-retail">بيع: ${escapeHtml(med.price)} ج</span>` : ""}
+                ${med.purchasePrice ? `<span class="price-tag tag-cost"><span class="price-lbl">شراء</span> ${escapeHtml(med.purchasePrice)} ج</span>` : ""}
+                ${med.wholesalePrice ? `<span class="price-tag tag-wholesale"><span class="price-lbl">جملة</span> ${escapeHtml(med.wholesalePrice)} ج</span>` : ""}
+                ${med.price ? `<span class="price-tag tag-retail"><span class="price-lbl">بيع</span> ${escapeHtml(med.price)} ج</span>` : ""}
               </div>` : ""}
             </div>
           </div>
 
-          <!-- التحكم السريع في الكمية بالمخزن -->
+          <!-- التحكم السريع في الكمية بالمخزن V2 -->
           <div class="med-stock-control">
             <div class="stock-label">المخزن</div>
             <div class="stock-counter-wrapper">
-              <button class="stock-btn" title="صرف / إنقاص" data-action="dec-stock" data-id="${escapeHtml(med.id)}">-</button>
-              <span class="stock-qty-display">${qty}</span>
-              <button class="stock-btn" title="إضافة / توريد" data-action="inc-stock" data-id="${escapeHtml(med.id)}">+</button>
+              <button class="stock-btn dec-btn" title="صرف / إنقاص" data-action="dec-stock" data-id="${escapeHtml(med.id)}">-</button>
+              <span class="stock-qty-display ${isLowStock ? 'qty-low' : ''}">${qty}</span>
+              <button class="stock-btn inc-btn" title="إضافة / توريد" data-action="inc-stock" data-id="${escapeHtml(med.id)}">+</button>
             </div>
           </div>
         </div>

@@ -343,37 +343,40 @@ function renderList() {
         <div class="med-card ${exp.borderClass}" data-action="details" data-id="${escapeHtml(med.id)}">
           <div class="med-main-info" data-action="details" data-id="${escapeHtml(med.id)}">
             <div class="med-category-icon" data-action="details" data-id="${escapeHtml(med.id)}">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
                 <path d="M10.5 20.5L3.5 13.5a4.95 4.95 0 0 1 7-7l7 7a4.95 4.95 0 0 1-7 7z"></path>
                 <path d="M8.5 8.5l7 7"></path>
               </svg>
             </div>
             <div class="med-details-col" data-action="details" data-id="${escapeHtml(med.id)}">
-              <div class="med-title">${escapeHtml(med.name)}</div>
-              <div class="med-generic">${escapeHtml(med.genericName || "مستحضر بيطري")}</div>
-              <div class="med-tags">
+              <div class="med-header-row">
+                <div class="med-title">${escapeHtml(med.name)}</div>
                 <span class="badge ${exp.badgeClass}">
+                  <span class="badge-dot"></span>
                   ${escapeHtml(exp.label)}
                 </span>
+              </div>
+              <div class="med-sub-row">
+                <span class="med-generic">${escapeHtml(med.genericName || "مستحضر بيطري")}</span>
                 <span class="badge badge-category">${escapeHtml(med.category || "عام")}</span>
                 ${isLowStock ? `<span class="badge badge-critical">نقص مخزون</span>` : ""}
               </div>
               ${(med.price || med.wholesalePrice || med.purchasePrice) ? `
               <div class="med-price-row">
-                ${med.purchasePrice ? `<span class="price-tag tag-cost">شراء: ${escapeHtml(med.purchasePrice)} ج</span>` : ""}
-                ${med.wholesalePrice ? `<span class="price-tag tag-wholesale">جملة: ${escapeHtml(med.wholesalePrice)} ج</span>` : ""}
-                ${med.price ? `<span class="price-tag tag-retail">بيع: ${escapeHtml(med.price)} ج</span>` : ""}
+                ${med.purchasePrice ? `<span class="price-tag tag-cost"><span class="price-lbl">شراء</span> ${escapeHtml(med.purchasePrice)} ج</span>` : ""}
+                ${med.wholesalePrice ? `<span class="price-tag tag-wholesale"><span class="price-lbl">جملة</span> ${escapeHtml(med.wholesalePrice)} ج</span>` : ""}
+                ${med.price ? `<span class="price-tag tag-retail"><span class="price-lbl">بيع</span> ${escapeHtml(med.price)} ج</span>` : ""}
               </div>` : ""}
             </div>
           </div>
 
-          <!-- التحكم السريع في الكمية بالمخزن -->
+          <!-- التحكم السريع في الكمية بالمخزن V2 -->
           <div class="med-stock-control">
             <div class="stock-label">المخزن</div>
             <div class="stock-counter-wrapper">
-              <button class="stock-btn" title="صرف / إنقاص" data-action="dec-stock" data-id="${escapeHtml(med.id)}">-</button>
-              <span class="stock-qty-display">${qty}</span>
-              <button class="stock-btn" title="إضافة / توريد" data-action="inc-stock" data-id="${escapeHtml(med.id)}">+</button>
+              <button class="stock-btn dec-btn" title="صرف / إنقاص" data-action="dec-stock" data-id="${escapeHtml(med.id)}">-</button>
+              <span class="stock-qty-display ${isLowStock ? 'qty-low' : ''}">${qty}</span>
+              <button class="stock-btn inc-btn" title="إضافة / توريد" data-action="inc-stock" data-id="${escapeHtml(med.id)}">+</button>
             </div>
           </div>
         </div>
