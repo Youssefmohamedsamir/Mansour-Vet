@@ -342,10 +342,13 @@ textarea.form-input {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  padding: calc(env(safe-area-inset-top, 0px) + 6px) 12px 65px 12px;
+  padding-top: max(calc(env(safe-area-inset-top, 0px) + 14px), 20px);
+  padding-left: max(env(safe-area-inset-left, 0px), 14px);
+  padding-right: max(env(safe-area-inset-right, 0px), 14px);
+  padding-bottom: max(calc(env(safe-area-inset-bottom, 0px) + 75px), 85px);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
 }
 
 /* Header */
@@ -353,29 +356,29 @@ textarea.form-input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
-  background: rgba(14, 23, 38, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
-  gap: 8px;
-  margin-top: 2px;
+  padding: 12px 14px;
+  background: rgba(14, 23, 38, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2);
+  gap: 10px;
+  margin-bottom: 4px;
 }
 
 .brand-wrapper {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   min-width: 0;
   flex: 1;
 }
 
 .app-logo {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
   object-fit: contain;
   flex-shrink: 0;
   border: 1px solid rgba(16, 185, 129, 0.3);
@@ -390,7 +393,7 @@ textarea.form-input {
 }
 
 .brand-title {
-  font-size: 0.98rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #ffffff;
   white-space: nowrap;
@@ -399,17 +402,17 @@ textarea.form-input {
 }
 
 .brand-subtitle {
-  font-size: 0.66rem;
+  font-size: 0.72rem;
   color: #10b981;
   font-weight: 700;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
   white-space: nowrap;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   flex-shrink: 0;
 }
 
@@ -417,9 +420,9 @@ textarea.form-input {
   background: #0d1726;
   border: 1px solid #1e2c44;
   color: #94a3b8;
-  width: 35px;
-  height: 35px;
-  border-radius: 10px;
+  width: 37px;
+  height: 37px;
+  border-radius: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -515,22 +518,24 @@ textarea.form-input {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 6px;
+  gap: 12px;
+  margin-bottom: 2px;
 }
 
 @media (min-width: 640px) {
   .stats-grid {
     grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
   }
 }
 
 .stat-card {
   background: #0e1626;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 14px 16px;
   cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   transition: background 0.15s, border-color 0.15s, transform 0.1s;
 }
 
@@ -1198,7 +1203,7 @@ textarea.form-input {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 4px 8px 4px 8px;
+  padding: 6px 8px max(calc(env(safe-area-inset-bottom, 0px) + 6px), 8px) 8px;
   z-index: 999;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
 }
