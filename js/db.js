@@ -157,6 +157,14 @@ class VetDB {
       // تحديث نسخة الطوارئ الدائمة
       if (items.length > 0) {
         localStorage.setItem(BACKUP_KEY, JSON.stringify(items));
+      } else {
+        const backup = this.getBackupFromStorage();
+        if (backup && backup.length > 0) {
+          for (const it of backup) {
+            await this.putToDB(it);
+          }
+          return backup;
+        }
       }
       return items;
     } else {
@@ -245,24 +253,112 @@ class VetDB {
 
   async importBackup(jsonString) {
     try {
-      const data = JSON.parse(jsonString);
-      if (!data.medicines || !Array.isArray(data.medicines)) {
-        throw new Error("ملف النسخة الاحتياطية غير صالح.");
+      if (!jsonString) {
+        throw new Error("كود النسخة الاحتياطية فارغ.");
       }
 
-      for (const item of data.medicines) {
-        if (item.id) {
-          await this.update(item.id, item).catch(() => this.add(item));
-        } else {
-          await this.add(item);
+      let data = null;
+      if (typeof jsonString !== "string") {
+        data = jsonString;
+      } else {
+        let str = jsonString.trim();
+        // إزالة علامة BOM إن وجدت
+        if (str.charCodeAt(0) === 0xFEFF) {
+          str = str.substring(1);
+        }
+        // إزالة كتل الماركداون
+        if (str.startsWith("```")) {
+          str = str.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "").trim();
+        }
+        data = JSON.parse(str);
+      }
+
+      let meds = null;
+      if (Array.isArray(data)) {
+        meds = data;
+      } else if (data && typeof data === "object") {
+        if (Array.isArray(data.medicines)) meds = data.medicines;
+        else if (Array.isArray(data.data)) meds = data.data;
+        else if (data.data && Array.isArray(data.data.medicines)) meds = data.data.medicines;
+        else if (Array.isArray(data.items)) meds = data.items;
+        else if (Array.isArray(data.drugs)) meds = data.drugs;
+        else if (Array.isArray(data.products)) meds = data.products;
+        else if (Array.isArray(data.mansour_medicines_permanent_backup)) meds = data.mansour_medicines_permanent_backup;
+        else {
+          for (const key of Object.keys(data)) {
+            if (Array.isArray(data[key]) && data[key].length > 0 && typeof data[key][0] === "object") {
+              meds = data[key];
+              break;
+            }
+          }
         }
       }
+
+      if (!meds || !Array.isArray(meds)) {
+        throw new Error("ملف النسخة الاحتياطية غير صالح أو لا يحتوي على قائمة أدوية صحيحة.");
+      }
+
+      // تصفية وتجهيز وتطبيع عناصر الأدوية لضمان قراءتها وعرضها فوراً
+      const validItems = [];
+      const nowIso = new Date().toISOString();
+      for (const raw of meds) {
+        if (!raw || typeof raw !== "object") continue;
+        const item = {
+          id: String(raw.id || ("med_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5))),
+          name: String(raw.name || raw.medName || raw.tradeName || "دواء بيطري"),
+          genericName: String(raw.genericName || raw.scientificName || ""),
+          category: String(raw.category || "عام"),
+          expiryDate: String(raw.expiryDate || raw.expDate || raw.expiry || ""),
+          quantity: raw.quantity !== undefined ? raw.quantity : (raw.qty !== undefined ? raw.qty : (raw.stock !== undefined ? raw.stock : 0)),
+          price: raw.price || raw.sellPrice || "",
+          wholesalePrice: raw.wholesalePrice || "",
+          purchasePrice: raw.purchasePrice || raw.costPrice || "",
+          minQuantity: raw.minQuantity || raw.lowStock || 5,
+          batchNumber: raw.batchNumber || raw.batch || "",
+          notes: raw.notes || "",
+          createdAt: raw.createdAt || nowIso,
+          updatedAt: nowIso
+        };
+        validItems.push(item);
+      }
+
+      if (validItems.length === 0) {
+        throw new Error("لم يتم العثور على أي أدوية مسجلة داخل هذا الكود.");
+      }
+
+      // حفظ دفعة واحدة سريعة ومباشرة في IndexedDB
+      if (this.db) {
+        await new Promise((resolve, reject) => {
+          const transaction = this.db.transaction([STORE_NAME], "readwrite");
+          const store = transaction.objectStore(STORE_NAME);
+          for (const item of validItems) {
+            store.put(item);
+          }
+          transaction.oncomplete = () => resolve();
+          transaction.onerror = () => reject(transaction.error);
+          transaction.onabort = () => reject(transaction.error);
+        });
+      }
+
+      // دمج وتحديث النسخة الدائمة الفورية في LocalStorage
+      const currentList = this.getBackupFromStorage();
+      const map = new Map();
+      for (const it of currentList) {
+        if (it && it.id) map.set(it.id, it);
+      }
+      for (const it of validItems) {
+        map.set(it.id, it);
+      }
+      const allMerged = Array.from(map.values());
+      localStorage.setItem(BACKUP_KEY, JSON.stringify(allMerged));
 
       if (data.settings) {
         this.saveSettings(data.settings);
       }
-      return { success: true, count: data.medicines.length };
+
+      return { success: true, count: validItems.length };
     } catch (err) {
+      console.error("Import backup failed:", err);
       return { success: false, error: err.message };
     }
   }

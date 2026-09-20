@@ -813,6 +813,23 @@ async function handleShareBackup() {
 }
 
 /**
+ * إعادة ضبط الفلاتر والبحث لتظهر جميع الأدوية فوراً بعد الاستيراد
+ */
+function resetFiltersAndRefreshUI() {
+  currentFilter = "all";
+  searchQuery = "";
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) searchInput.value = "";
+  document.querySelectorAll(".chip").forEach((chip) => {
+    if (chip.dataset.filter === "all") {
+      chip.classList.add("active");
+    } else {
+      chip.classList.remove("active");
+    }
+  });
+}
+
+/**
  * استيراد واستعادة النسخة الاحتياطية من الكود الملصوق
  */
 async function handleTextImport() {
@@ -828,6 +845,7 @@ async function handleTextImport() {
     alert(`تمت استعادة ${res.count} صنف بنجاح.`);
     closeModal("modalBackup");
     if (textarea) textarea.value = "";
+    resetFiltersAndRefreshUI();
     await loadMedicines();
     if (window.cloudSync) {
       window.cloudSync.pushToCloud();
@@ -850,6 +868,7 @@ async function handleImport(e) {
     if (res.success) {
       alert(`تمت استعادة ${res.count} صنف بنجاح.`);
       closeModal("modalBackup");
+      resetFiltersAndRefreshUI();
       await loadMedicines();
       if (window.cloudSync) {
         window.cloudSync.pushToCloud();
