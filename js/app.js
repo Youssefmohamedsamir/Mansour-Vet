@@ -22,7 +22,7 @@ function checkAuthAndInit() {
     mainApp.style.display = "none";
   } else {
     loginOverlay.style.display = "none";
-    mainApp.style.display = "block";
+    mainApp.style.display = "flex";
     loadMedicines();
   }
 }
@@ -42,7 +42,7 @@ async function handleLoginSubmit(e) {
   if (result.success) {
     errorBox.style.display = "none";
     document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("mainAppContainer").style.display = "block";
+    document.getElementById("mainAppContainer").style.display = "flex";
     loadMedicines();
   } else {
     errorBox.textContent = result.error;
