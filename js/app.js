@@ -318,18 +318,41 @@ function renderList() {
   });
 
   if (filtered.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.5">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
+    if (allMedicines.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <div class="empty-title">لا توجد أدوية مسجلة حالياً</div>
+          <div class="empty-desc">يمكنك إضافة صنف جديد يدوياً أو تكييش وتحميل الأصناف التجريبية الجاهزة للاختبار الفوري.</div>
+          <button class="btn-primary-action" onclick="loadDemoDataAction()" style="margin-top: 14px; padding: 10px 22px; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>تحميل بيانات وهمية وتكييشها</span>
+          </button>
         </div>
-        <div class="empty-title">لا توجد أدوية مسجلة</div>
-        <div class="empty-desc">اضغط على زر "إضافة دواء" بالأعلى لبدء تسجيل أصناف الصيدلية.</div>
-      </div>
-    `;
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <div class="empty-title">لا توجد نتائج مطابقة</div>
+          <div class="empty-desc">جرب تعديل كلمة البحث أو تغيير الفلتر المختار بالأعلى.</div>
+        </div>
+      `;
+    }
     return;
   }
 
@@ -892,6 +915,24 @@ async function handleImport(e) {
   };
   reader.readAsText(file);
 }
+
+/**
+ * تكييش وتحميل البيانات الوهمية والتجريبية بضغطة زر
+ */
+async function loadDemoDataAction() {
+  const confirmed = confirm("هل تريد تكييش وتحميل 8 أصناف بيطرية وهمية جاهزة لتجربة التطبيق؟");
+  if (!confirmed) return;
+  await window.vetDB.resetToDemoData();
+  resetFiltersAndRefreshUI();
+  await loadMedicines();
+  const modalBackup = document.getElementById("modalBackup");
+  if (modalBackup) modalBackup.classList.remove("active");
+  if (window.cloudSync) {
+    window.cloudSync.pushToCloud();
+  }
+  alert("تم تكييش وتحميل البيانات التجريبية بنجاح! يمكنك الآن تجربة البحث، الفلاتر، وتنبيهات الصلاحية.");
+}
+window.loadDemoDataAction = loadDemoDataAction;
 
 /**
  * حماية وتطهير النصوص
